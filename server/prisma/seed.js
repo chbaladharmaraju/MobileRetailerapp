@@ -22,119 +22,55 @@ async function seed() {
   const adminPassword = await bcrypt.hash('admin123', 12);
   const admin = await prisma.user.create({
     data: {
-      name: 'Admin User',
-      email: 'admin@antigravity.com',
+      name: 'Orange Admin',
+      email: 'admin@orange.com',
       password: adminPassword,
       role: 'ADMIN',
     },
   });
   console.log('✅ Admin user created:', admin.email);
 
-  // Create Staff user
-  const staffPassword = await bcrypt.hash('staff123', 12);
-  const staff = await prisma.user.create({
-    data: {
-      name: 'Staff User',
-      email: 'staff@antigravity.com',
-      password: staffPassword,
-      role: 'STAFF',
+  // Create one Customer
+  const customer = await prisma.customer.create({
+    data: { 
+      name: 'Balu Test', 
+      phone: '9876543210', 
+      email: 'balu.test@example.com', 
+      address: 'Shop 1, Main Street' 
     },
   });
-  console.log('✅ Staff user created:', staff.email);
+  console.log('✅ 1 customer created');
 
-  // Create Customers
-  const customers = await Promise.all([
-    prisma.customer.create({
-      data: { name: 'Rahul Sharma', phone: '9876543210', email: 'rahul@example.com', address: 'Shop 12, Main Market, Delhi' },
-    }),
-    prisma.customer.create({
-      data: { name: 'Priya Patel', phone: '9876543211', email: 'priya@example.com', address: '45 Green Street, Mumbai' },
-    }),
-    prisma.customer.create({
-      data: { name: 'Vikram Singh', phone: '9876543212', email: 'vikram@example.com', address: '8 Lake Road, Bangalore' },
-    }),
-  ]);
-  console.log(`✅ ${customers.length} customers created`);
+  // Create one Product
+  const product = await prisma.product.create({
+    data: {
+      name: 'iPhone 15 Pro',
+      brand: 'Apple',
+      model: 'A3106',
+      costPrice: 95000,
+      sellingPrice: 120000,
+      stock: 5,
+      minStock: 2,
+      specs: { ram: '8GB', storage: '128GB', color: 'Black' },
+    },
+  });
+  console.log('✅ 1 product created');
 
-  // Create Products (New Phones)
-  const products = await Promise.all([
-    prisma.product.create({
-      data: {
-        name: 'iPhone 15 Pro Max',
-        brand: 'Apple',
-        model: 'A3106',
-        costPrice: 125000,
-        sellingPrice: 159900,
-        stock: 8,
-        minStock: 3,
-        specs: { ram: '8GB', storage: '256GB', color: 'Natural Titanium' },
-      },
-    }),
-    prisma.product.create({
-      data: {
-        name: 'Samsung Galaxy S24 Ultra',
-        brand: 'Samsung',
-        model: 'SM-S928B',
-        costPrice: 105000,
-        sellingPrice: 134999,
-        stock: 12,
-        minStock: 5,
-        specs: { ram: '12GB', storage: '256GB', color: 'Titanium Gray' },
-      },
-    }),
-    prisma.product.create({
-      data: {
-        name: 'OnePlus 12',
-        brand: 'OnePlus',
-        model: 'CPH2583',
-        costPrice: 52000,
-        sellingPrice: 64999,
-        stock: 15,
-        minStock: 5,
-        specs: { ram: '12GB', storage: '256GB', color: 'Silky Black' },
-      },
-    }),
-    prisma.product.create({
-      data: {
-        name: 'Google Pixel 8 Pro',
-        brand: 'Google',
-        model: 'GC3VE',
-        costPrice: 78000,
-        sellingPrice: 106999,
-        stock: 2,
-        minStock: 3,
-        specs: { ram: '12GB', storage: '128GB', color: 'Obsidian' },
-      },
-    }),
-    prisma.product.create({
-      data: {
-        name: 'Realme GT 5 Pro',
-        brand: 'Realme',
-        model: 'RMX3888',
-        costPrice: 28000,
-        sellingPrice: 37999,
-        stock: 20,
-        minStock: 5,
-        specs: { ram: '8GB', storage: '128GB', color: 'Submarine Blue' },
-      },
-    }),
-  ]);
-  console.log(`✅ ${products.length} products created`);
+  // Create one Spare Part
+  const part = await prisma.sparePart.create({
+    data: { 
+      name: 'iPhone 15 Screen', 
+      category: 'screen', 
+      costPrice: 8500, 
+      stock: 2, 
+      minStock: 1 
+    } 
+  });
+  console.log('✅ 1 spare part created');
 
-  // Create Spare Parts
-  const parts = await Promise.all([
-    prisma.sparePart.create({ data: { name: 'iPhone 15 Screen Assembly', category: 'screen', costPrice: 8500, stock: 5, minStock: 2, supplier: 'MobileParts India' } }),
-    prisma.sparePart.create({ data: { name: 'Samsung S24 Battery', category: 'battery', costPrice: 2800, stock: 10, minStock: 3, supplier: 'BatteryWorld' } }),
-    prisma.sparePart.create({ data: { name: 'Type-C Charging Port', category: 'charging_port', costPrice: 450, stock: 25, minStock: 5, supplier: 'SpareHub' } }),
-    prisma.sparePart.create({ data: { name: 'iPhone Back Glass', category: 'back_panel', costPrice: 3200, stock: 4, minStock: 2, supplier: 'MobileParts India' } }),
-    prisma.sparePart.create({ data: { name: 'Universal Screen Protector', category: 'accessories', costPrice: 50, stock: 100, minStock: 20, supplier: 'AccessoryMart' } }),
-  ]);
-  console.log(`✅ ${parts.length} spare parts created`);
-
-  console.log('\n🎉 Seeding complete!\n');
+  console.log('\n🎉 Fresh seeding complete!\n');
   console.log('Login credentials:');
-  console.log('  Admin: admin@antigravity.com / admin123');
-  console.log('  Staff: staff@antigravity.com / staff123\n');
+  console.log('  Admin: admin@orange.com / admin123\n');
 }
 
 seed()
