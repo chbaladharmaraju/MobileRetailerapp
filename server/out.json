@@ -1,0 +1,157 @@
+{
+  "summary": {
+    "newSales": {
+      "count": 0,
+      "revenue": 0,
+      "profit": 0,
+      "cost": 0
+    },
+    "secondHandSales": {
+      "count": 0,
+      "revenue": 0,
+      "profit": 0,
+      "cost": 0
+    },
+    "repairs": {
+      "count": 0,
+      "revenue": 0,
+      "profit": 0
+    },
+    "totalRevenue": 0,
+    "totalProfit": 0,
+    "totalPurchaseCost": 0,
+    "outstandingCredit": 130,
+    "supplierDues": 0,
+    "totalRepairsInPeriod": 0
+  },
+  "inventory": {
+    "totalProductsInStock": 72,
+    "totalSoldItems": 0,
+    "secondHandInStock": 0,
+    "lowStockProducts": 1,
+    "lowStockParts": 0,
+    "unresolvedAlerts": 1
+  },
+  "salesTrend": [
+    {
+      "label": "Apr 25",
+      "newSalesRevenue": 0,
+      "secondHandRevenue": 0,
+      "repairRevenue": 0,
+      "purchaseCost": 0,
+      "supplierCredit": 0,
+      "totalRevenue": 0,
+      "totalProfit": 0
+    },
+    {
+      "label": "May 25",
+      "newSalesRevenue": 0,
+      "secondHandRevenue": 0,
+      "repairRevenue": 0,
+      "purchaseCost": 0,
+      "supplierCredit": 0,
+      "totalRevenue": 0,
+      "totalProfit": 0
+    },
+    {
+      "label": "Jun 25",
+      "newSalesRevenue": 0,
+      "secondHandRevenue": 0,
+      "repairRevenue": 0,
+      "purchaseCost": 0,
+      "supplierCredit": 0,
+      "totalRevenue": 0,
+      "totalProfit": 0
+    },
+    {
+      "label": "Jul 25",
+      "newSalesRevenue": 0,
+      "secondHandRevenue": 0,
+      "repairRevenue": 0,
+      "purchaseCost": 0,
+      "supplierCredit": 0,
+      "totalRevenue": 0,
+      "totalProfit": 0
+    },
+    {
+      "label": "Aug 25",
+      "newSalesRevenue": 0,
+      "secondHandRevenue": 0,
+      "repairRevenue": 0,
+      "purchaseCost": 0,
+      "supplierCredit": 0,
+      "totalRevenue": 0,
+      "totalProfit": 0
+    },
+    {
+      "label": "Sept 25",
+      "newSalesRevenue": 0,
+      "secondHandRevenue": 0,
+      "repairRevenue": 0,
+      "purchaseCost": 0,
+      "supplierCredit": 0,
+      "totalRevenue": 0,
+      "totalProfit": 0
+    },
+    {
+      "label": "Oct 25",
+      "newSalesRevenue": 0,
+      "secondHandRevenue": 0,
+      "repairRevenue": 0,
+      "purchaseCost": 0,
+      "supplierCredit": 0,
+      "totalRevenue": 0,
+      "totalProfit": 0
+    },
+    {
+      "label": "Nov 25",
+      "newSalesRevenue": 0,
+      "secondHandRevenue": 0,
+      "repairRevenue": 0,
+      "purchaseCost": 0,
+      "supplierCredit": 0,
+      "totalRevenue": 0,
+      "totalProfit": 0
+    },
+    {
+      "label": "Dec 25",
+      "newSalesRevenue": 0,
+      "secondHandRevenue": 0,
+      "repairRevenue": 0,
+      "purchaseCost": 0,
+      "supplierCredit": 0,
+      "totalRevenue": 0,
+      "totalProfit": 0
+    },
+    {
+      "label": "Jan 26",
+      "newSalesRevenue": 0,
+      "secondHandRevenue": 0,
+      "repairRevenue": 0,
+      "purchaseCost": 0,
+      "supplierCredit": 0,
+      "totalRevenue": 0,
+      "totalProfit": 0
+    },
+    {
+      "label": "Feb 26",
+      "newSalesRevenue": 0,
+      "secondHandRevenue": 0,
+      "repairRevenue": 0,
+      "purchaseCost": 0,
+      "supplierCredit": 0,
+      "totalRevenue": 0,
+      "totalProfit": 0
+    },
+    {
+      "label": "Mar 26",
+      "newSalesRevenue": 0,
+      "secondHandRevenue": 0,
+      "repairRevenue": 0,
+      "purchaseCost": 0,
+      "supplierCredit": 0,
+      "totalRevenue": 0,
+      "totalProfit": 0
+    }
+  ]
+}

@@ -1,0 +1,385 @@
+// prisma/schema.prisma
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ─── ENUMS ───────────────────────────────────────────────
+
+enum Role {
+  ADMIN
+  STAFF
+}
+
+enum PhoneCondition {
+  EXCELLENT
+  GOOD
+  FAIR
+  POOR
+}
+
+enum RepairStatus {
+  INTAKE
+  DIAGNOSING
+  IN_PROGRESS
+  WAITING_PARTS
+  COMPLETED
+  DELIVERED
+}
+
+enum AlertType {
+  LOW_STOCK
+  OUT_OF_STOCK
+}
+
+// ─── USERS ───────────────────────────────────────────────
+
+model User {
+  id        String   @id @default(uuid())
+  name      String
+  email     String   @unique
+  password  String
+  role      Role     @default(STAFF)
+  avatar    String?
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  sales             Sale[]
+  secondHandIntakes SecondHandIntake[]
+  repairs           Repair[]
+  creditTransactions CreditTransaction[]
+  inventoryPurchases InventoryPurchase[]
+  distributorTransactions DistributorTransaction[]
+
+  @@map("users")
+}
+
+// ─── CUSTOMERS ───────────────────────────────────────────
+
+model Customer {
+  id            String   @id @default(uuid())
+  name          String
+  phone         String   @unique
+  email         String?
+  address       String?
+  idProof       String?
+  creditBalance Decimal  @default(0) @db.Decimal(10, 2)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  sales              Sale[]
+  secondHandIntakes  SecondHandIntake[]
+  repairs            Repair[]
+  creditTransactions CreditTransaction[]
+
+  @@map("customers")
+}
+
+// ─── CUSTOMER CREDIT LEDGER ──────────────────────────────
+
+enum TransactionType {
+  CREDIT
+  PAYMENT
+}
+
+model CreditTransaction {
+  id          String          @id @default(uuid())
+  customerId  String
+  amount      Decimal         @db.Decimal(10, 2)
+  type        TransactionType
+  description String?
+  referenceId String?         // To link back to a Sale or Repair ID if type=CREDIT
+  userId      String?         // Which staff collected the payment
+  createdAt   DateTime        @default(now())
+
+  customer Customer @relation(fields: [customerId], references: [id])
+  user     User?    @relation(fields: [userId], references: [id])
+
+  @@map("credit_transactions")
+}
+
+// ─── SUPPLIERS (DISTRIBUTORS) ────────────────────────────
+
+model Distributor {
+  id            String   @id @default(uuid())
+  name          String
+  phone         String   @unique
+  email         String?
+  address       String?
+  balanceOwed   Decimal  @default(0) @db.Decimal(10, 2)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  purchases     InventoryPurchase[]
+  transactions  DistributorTransaction[]
+  products      Product[]
+  spareParts    SparePart[]
+  type          SupplierType @default(BOTH)
+
+  @@map("distributors")
+}
+
+enum SupplierType {
+  MOBILE_SUPPLIER
+  SPARE_PART_SUPPLIER
+  BOTH
+}
+
+model DistributorTransaction {
+  id            String          @id @default(uuid())
+  distributorId String
+  amount        Decimal         @db.Decimal(10, 2)
+  type          TransactionType // Reusing enum: CREDIT (We bought on credit) or PAYMENT (We paid off debt)
+  description   String?
+  referenceId   String?         // Link to InventoryPurchase
+  userId        String?
+  createdAt     DateTime        @default(now())
+
+  distributor   Distributor @relation(fields: [distributorId], references: [id])
+  user          User?       @relation(fields: [userId], references: [id])
+
+  @@map("distributor_transactions")
+}
+
+model InventoryPurchase {
+  id            String   @id @default(uuid())
+  distributorId String
+  userId        String
+  totalCost     Decimal  @db.Decimal(10, 2)
+  paymentStatus String   @default("PAID") // PAID, PARTIAL, CREDIT
+  notes         String?
+  createdAt     DateTime @default(now())
+
+  distributor   Distributor @relation(fields: [distributorId], references: [id])
+  user          User        @relation(fields: [userId], references: [id])
+  items         PurchaseItem[]
+
+  @@map("inventory_purchases")
+}
+
+model PurchaseItem {
+  id              String   @id @default(uuid())
+  purchaseId      String
+  itemType        String   // "PRODUCT" or "SPARE_PART"
+  productId       String?  // References Product id if it's a new phone
+  sparePartId     String?  // References SparePart id if it's a part
+  quantity        Int
+  unitCost        Decimal  @db.Decimal(10, 2)
+
+  purchase        InventoryPurchase @relation(fields: [purchaseId], references: [id], onDelete: Cascade)
+
+  @@map("purchase_items")
+}
+
+// ─── PRODUCTS (New Phones) ───────────────────────────────
+
+model Product {
+  id           String   @id @default(uuid())
+  name         String
+  brand        String
+  model        String
+  imei         String?  @unique
+  costPrice    Decimal  @db.Decimal(10, 2)
+  sellingPrice Decimal  @db.Decimal(10, 2)
+  stock        Int      @default(0)
+  minStock     Int      @default(5)
+  category     String   @default("new")
+  image        String?
+  specs        Json?
+  distributorId String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  saleItems       SaleItem[]
+  inventoryAlerts InventoryAlert[]
+  distributor     Distributor? @relation(fields: [distributorId], references: [id])
+
+  @@map("products")
+}
+
+// ─── SALES (New Phone Sales) ─────────────────────────────
+
+model Sale {
+  id          String   @id @default(uuid())
+  customerId  String
+  userId      String
+  totalAmount Decimal  @db.Decimal(10, 2)
+  totalProfit Decimal  @db.Decimal(10, 2)
+  discount    Decimal  @default(0) @db.Decimal(10, 2)
+  paymentMode String   @default("cash")
+  notes       String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  customer Customer   @relation(fields: [customerId], references: [id])
+  user     User       @relation(fields: [userId], references: [id])
+  items    SaleItem[]
+  invoice  Invoice?
+
+  @@map("sales")
+}
+
+model SaleItem {
+  id        String  @id @default(uuid())
+  saleId    String
+  productId String
+  quantity  Int     @default(1)
+  unitPrice Decimal @db.Decimal(10, 2)
+  costPrice Decimal @db.Decimal(10, 2)
+  profit    Decimal @db.Decimal(10, 2)
+
+  sale    Sale    @relation(fields: [saleId], references: [id], onDelete: Cascade)
+  product Product @relation(fields: [productId], references: [id])
+
+  @@map("sale_items")
+}
+
+// ─── SECOND-HAND PHONES ──────────────────────────────────
+
+model SecondHandIntake {
+  id           String         @id @default(uuid())
+  customerId   String
+  userId       String
+  brand        String
+  model        String
+  imei         String         @unique
+  buyingPrice  Decimal        @db.Decimal(10, 2)
+  condition    PhoneCondition
+  kycPhotos    String[]
+  devicePhotos String[]
+  notes        String?
+  isSold       Boolean        @default(false)
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
+
+  customer Customer        @relation(fields: [customerId], references: [id])
+  user     User            @relation(fields: [userId], references: [id])
+  sale     SecondHandSale?
+
+  @@map("secondhand_intakes")
+}
+
+model SecondHandSale {
+  id           String   @id @default(uuid())
+  intakeId     String   @unique
+  buyerName    String
+  buyerPhone   String
+  sellingPrice Decimal  @db.Decimal(10, 2)
+  profit       Decimal  @db.Decimal(10, 2)
+  paymentMode  String   @default("cash")
+  createdAt    DateTime @default(now())
+
+  intake  SecondHandIntake @relation(fields: [intakeId], references: [id])
+  invoice Invoice?
+
+  @@map("secondhand_sales")
+}
+
+// ─── REPAIR & SERVICE CENTER ─────────────────────────────
+
+model Repair {
+  id               String       @id @default(uuid())
+  customerId       String
+  userId           String
+  deviceBrand      String
+  deviceModel      String
+  imei             String?
+  issueDescription String
+  estimatedCost    Decimal?     @db.Decimal(10, 2)
+  finalCost        Decimal?     @db.Decimal(10, 2)
+  serviceCharge    Decimal?     @db.Decimal(10, 2)
+  totalProfit      Decimal?     @db.Decimal(10, 2)
+  status           RepairStatus @default(INTAKE)
+  beforePhotos     String[]
+  afterPhotos      String[]
+  notes            String?
+  completedAt      DateTime?
+  deliveredAt      DateTime?
+  createdAt        DateTime     @default(now())
+  updatedAt        DateTime     @updatedAt
+
+  customer Customer     @relation(fields: [customerId], references: [id])
+  user     User         @relation(fields: [userId], references: [id])
+  parts    RepairPart[]
+  invoice  Invoice?
+
+  @@map("repairs")
+}
+
+// ─── SPARE PARTS ─────────────────────────────────────────
+
+model SparePart {
+  id        String   @id @default(uuid())
+  name      String
+  category  String
+  costPrice Decimal  @db.Decimal(10, 2)
+  stock     Int      @default(0)
+  minStock  Int      @default(3)
+  distributorId String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  repairParts     RepairPart[]
+  inventoryAlerts InventoryAlert[]
+  distributor     Distributor? @relation(fields: [distributorId], references: [id])
+
+  @@map("spare_parts")
+}
+
+model RepairPart {
+  id          String  @id @default(uuid())
+  repairId    String
+  sparePartId String
+  quantity    Int     @default(1)
+  unitCost    Decimal @db.Decimal(10, 2)
+
+  repair    Repair    @relation(fields: [repairId], references: [id], onDelete: Cascade)
+  sparePart SparePart @relation(fields: [sparePartId], references: [id])
+
+  @@map("repair_parts")
+}
+
+// ─── INVOICES ────────────────────────────────────────────
+
+model Invoice {
+  id               String   @id @default(uuid())
+  invoiceNumber    String   @unique
+  type             String
+  saleId           String?  @unique
+  secondHandSaleId String?  @unique
+  repairId         String?  @unique
+  totalAmount      Decimal  @db.Decimal(10, 2)
+  tax              Decimal  @default(0) @db.Decimal(10, 2)
+  grandTotal       Decimal  @db.Decimal(10, 2)
+  pdfUrl           String?
+  createdAt        DateTime @default(now())
+
+  sale           Sale?           @relation(fields: [saleId], references: [id])
+  secondHandSale SecondHandSale? @relation(fields: [secondHandSaleId], references: [id])
+  repair         Repair?         @relation(fields: [repairId], references: [id])
+
+  @@map("invoices")
+}
+
+// ─── INVENTORY ALERTS ────────────────────────────────────
+
+model InventoryAlert {
+  id          String    @id @default(uuid())
+  productId   String?
+  sparePartId String?
+  alertType   AlertType
+  message     String
+  isRead      Boolean   @default(false)
+  createdAt   DateTime  @default(now())
+
+  product   Product?   @relation(fields: [productId], references: [id])
+  sparePart SparePart? @relation(fields: [sparePartId], references: [id])
+
+  @@map("inventory_alerts")
+}
