@@ -151,14 +151,21 @@ body::before {
 
 [data-theme="dark"] body::before {
   background:
-    radial-gradient(circle at 15% 50%, rgba(79, 140, 255, 0.04), transparent 25%),
-    radial-gradient(circle at 85% 30%, rgba(167, 139, 250, 0.03), transparent 25%);
+    radial-gradient(circle at 10% 30%, rgba(249, 115, 22, 0.05), transparent 40%),
+    radial-gradient(circle at 90% 70%, rgba(79, 140, 255, 0.04), transparent 40%),
+    radial-gradient(circle at 50% 50%, rgba(167, 139, 250, 0.03), transparent 50%);
+  animation: bgPulse 20s ease-in-out infinite alternate;
+}
+
+@keyframes bgPulse {
+  0% { opacity: 0.7; transform: scale(1); }
+  100% { opacity: 1; transform: scale(1.1); }
 }
 
 :root body::before {
   background:
-    radial-gradient(circle at 20% 40%, rgba(79, 140, 255, 0.06), transparent 30%),
-    radial-gradient(circle at 80% 60%, rgba(249, 115, 22, 0.04), transparent 30%);
+    radial-gradient(circle at 20% 40%, rgba(249, 115, 22, 0.08), transparent 30%),
+    radial-gradient(circle at 80% 60%, rgba(79, 140, 255, 0.06), transparent 30%);
 }
 
 /* ─── Scrollbar ──────────────────────────────────────────────────────── */

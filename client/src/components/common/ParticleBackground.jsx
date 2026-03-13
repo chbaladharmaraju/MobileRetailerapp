@@ -8,18 +8,18 @@ const ParticleBackground = () => {
   const isMobileRef = useRef(false);
 
   const createParticle = useCallback((width, height, isMobile) => {
-    const baseSpeed = isMobile ? 0.15 : 0.25;
+    const baseSpeed = isMobile ? 0.08 : 0.12;
     return {
       x: Math.random() * width,
       y: Math.random() * height,
-      radius: Math.random() * (isMobile ? 1.8 : 2.5) + 0.5,
+      radius: Math.random() * (isMobile ? 1.5 : 2) + 0.5,
       vx: (Math.random() - 0.5) * baseSpeed,
       vy: (Math.random() - 0.5) * baseSpeed,
-      alpha: Math.random() * 0.5 + 0.1,
-      alphaDir: (Math.random() - 0.5) * 0.008,
+      alpha: Math.random() * 0.4 + 0.1,
+      alphaDir: (Math.random() - 0.5) * 0.005,
       phase: Math.random() * Math.PI * 2,
-      waveAmp: Math.random() * 0.3 + 0.1,
-      waveFreq: Math.random() * 0.002 + 0.001,
+      waveAmp: Math.random() * 0.2 + 0.1,
+      waveFreq: Math.random() * 0.0015 + 0.0005,
     };
   }, []);
 
