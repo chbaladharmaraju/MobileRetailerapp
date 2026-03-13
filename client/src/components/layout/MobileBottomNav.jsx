@@ -32,13 +32,14 @@ const MobileBottomNav = () => {
             key={tab.path}
             to={tab.path}
             end={tab.path === '/app'}
-            className="flex flex-col items-center gap-0.5 px-2 py-1.5 rounded-xl transition-all duration-200 min-w-0"
+            className="flex flex-col items-center justify-center gap-1.5 px-3 py-1.5 rounded-xl transition-all duration-200 min-w-[64px]"
             style={({ isActive }) => ({
               color: isActive ? 'var(--om-accent)' : 'var(--om-text-muted)',
+              backgroundColor: isActive ? 'var(--om-accent-glow)' : 'transparent',
             })}
           >
             <tab.icon className="w-5 h-5 shrink-0" />
-            <span className="text-[9px] font-semibold truncate max-w-[60px]">{tab.label}</span>
+            <span className="text-[9px] font-bold tracking-tight uppercase">{tab.label}</span>
           </NavLink>
         ))}
       </div>

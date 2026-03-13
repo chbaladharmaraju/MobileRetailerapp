@@ -103,10 +103,10 @@ const Sidebar = ({ open, setOpen }) => {
               </div>
               <button
                 onClick={() => setOpen(false)}
-                className="p-2 rounded-xl transition-colors shrink-0"
+                className="flex items-center justify-center w-10 h-10 rounded-xl transition-colors shrink-0"
                 style={{ color: 'var(--om-text-muted)' }}
               >
-                <HiOutlineX className="w-5 h-5" />
+                <HiOutlineX className="w-6 h-6" />
               </button>
             </div>
 

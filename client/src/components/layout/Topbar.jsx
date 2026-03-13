@@ -60,7 +60,7 @@ const Topbar = ({ sidebarOpen, setSidebarOpen }) => {
         <div className="flex items-center gap-3 flex-1 min-w-0">
           <button
             onClick={() => setSidebarOpen(!sidebarOpen)}
-            className="md:hidden p-2 rounded-xl transition-all shrink-0 active:scale-95"
+            className="md:hidden flex items-center justify-center w-10 h-10 rounded-xl transition-all shrink-0 active:scale-95"
             style={{
               background: 'var(--om-glass)',
               backdropFilter: 'blur(12px)',
@@ -128,7 +128,7 @@ const Topbar = ({ sidebarOpen, setSidebarOpen }) => {
           <div className="relative">
             <button
               onClick={() => setShowAlerts(!showAlerts)}
-              className="relative p-2 rounded-xl transition-all"
+              className="relative flex items-center justify-center w-10 h-10 rounded-xl transition-all"
               style={{
                 background: 'var(--om-glass)',
                 backdropFilter: 'blur(12px)',
@@ -136,9 +136,9 @@ const Topbar = ({ sidebarOpen, setSidebarOpen }) => {
                 color: 'var(--om-text-secondary)',
               }}
             >
-              <HiOutlineBell className="w-[18px] h-[18px]" />
+              <HiOutlineBell className="w-5 h-5" />
               {alerts.length > 0 && (
-                <span className="absolute top-1 right-1 w-2 h-2 rounded-full shadow-lg" style={{ backgroundColor: 'var(--om-red)' }} />
+                <span className="absolute top-2.5 right-2.5 w-2 h-2 rounded-full shadow-lg" style={{ backgroundColor: 'var(--om-red)' }} />
               )}
             </button>
 
