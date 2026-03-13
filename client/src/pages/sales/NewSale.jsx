@@ -90,9 +90,9 @@ const NewSale = () => {
   return (
     <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.4 }}>
       
-      <div className="flex justify-center mt-4 pb-12">
-        <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }} className="glass-card p-6 sm:p-8 w-full max-w-3xl border border-white/[0.08]">
-          <h2 className="text-lg font-semibold text-white mb-6">Create New Sale</h2>
+      <div className="flex justify-center mt-4 pb-20 sm:pb-12 px-4">
+        <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }} className="glass-card p-5 sm:p-8 w-full max-w-3xl border border-om-border">
+          <h2 className="text-lg font-bold text-om-text mb-6">Create New Sale</h2>
           
           <form onSubmit={handleSubmit} className="space-y-8">
             {/* Customer Section */}
@@ -125,7 +125,7 @@ const NewSale = () => {
             <div className="space-y-5 pt-2">
               <div className="flex justify-between items-center mb-2 border-b border-white/5 pb-3">
                 <label className="text-[11px] font-semibold text-ag-text-dim uppercase tracking-[0.18em] ml-1">Sale Items</label>
-                <button type="button" onClick={addItem} className="flex items-center gap-2 text-xs font-bold text-white hover:text-ag-primary transition-all bg-white/5 hover:bg-white/10 px-4 py-2 rounded-xl border border-white/5 active:scale-95">
+                <button type="button" onClick={addItem} className="flex items-center gap-2 text-xs font-bold text-om-text-secondary hover:text-om-accent transition-all bg-om-surface hover:bg-om-card-hover px-4 py-2 rounded-xl border border-om-border active:scale-95 shadow-sm">
                   <HiOutlinePlus className="w-3.5 h-3.5" />
                   Add Line Item
                 </button>
@@ -198,13 +198,13 @@ const NewSale = () => {
             </div>
 
             {/* Total & Submit */}
-            <div className="mt-8 pt-6 border-t border-white/[0.08] flex flex-col sm:flex-row justify-between items-center gap-4">
+            <div className="mt-10 pt-8 border-t border-om-border flex flex-col sm:flex-row justify-between items-center gap-6">
               <div className="text-center sm:text-left">
-                <p className="text-xs font-medium text-ag-text-dim uppercase tracking-wider mb-1">Total Amount</p>
-                <p className="text-3xl font-semibold text-white tracking-tight">₹{getTotal().toLocaleString('en-IN')}</p>
+                <p className="text-[11px] font-bold text-om-text-secondary uppercase tracking-[0.2em] mb-1.5">Total Amount</p>
+                <p className="text-3xl font-bold text-om-accent tracking-tight">₹{getTotal().toLocaleString('en-IN')}</p>
               </div>
-              <button type="submit" disabled={loading} className="ag-btn ag-btn-primary w-full sm:w-48 h-12 text-sm">
-                {loading ? <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" /> : 'Complete Sale'}
+              <button type="submit" disabled={loading} className="ag-btn ag-btn-primary w-full sm:w-56 h-14 text-[15px] font-bold shadow-lg shadow-om-accent-glow">
+                {loading ? <div className="w-5 h-5 border-3 border-white/30 border-t-white rounded-full animate-spin" /> : 'Complete Sale'}
               </button>
             </div>
           </form>

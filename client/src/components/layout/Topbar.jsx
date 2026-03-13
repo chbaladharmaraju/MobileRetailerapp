@@ -112,7 +112,7 @@ const Topbar = ({ sidebarOpen, setSidebarOpen }) => {
           {/* Theme Toggle */}
           <button
             onClick={toggleTheme}
-            className="p-2 rounded-xl transition-all duration-300 active:scale-95"
+            className="flex items-center justify-center w-10 h-10 rounded-xl transition-all duration-300 active:scale-95"
             style={{
               background: 'var(--om-glass)',
               backdropFilter: 'blur(12px)',
@@ -121,7 +121,7 @@ const Topbar = ({ sidebarOpen, setSidebarOpen }) => {
             }}
             title={theme === 'dark' ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
           >
-            {theme === 'dark' ? <HiOutlineSun className="w-[18px] h-[18px]" /> : <HiOutlineMoon className="w-[18px] h-[18px]" />}
+            {theme === 'dark' ? <HiOutlineSun className="w-5 h-5" /> : <HiOutlineMoon className="w-5 h-5" />}
           </button>
 
           {/* Alerts Bell */}
