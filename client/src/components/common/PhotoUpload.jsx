@@ -57,14 +57,14 @@ const PhotoUpload = ({ label, photos = [], onChange, maxFiles = 5, accept = 'ima
       {photos.length > 0 && (
         <div className="grid grid-cols-3 sm:grid-cols-4 gap-3">
           {photos.map((url, i) => (
-            <div key={i} className="relative group rounded-xl overflow-hidden border border-white/10 aspect-square">
+            <div key={i} className="relative group rounded-xl overflow-hidden border border-ag-border aspect-square">
               <img src={getImageUrl(url)} alt={`Photo ${i + 1}`} className="w-full h-full object-cover" />
               <button
                 type="button"
                 onClick={() => removePhoto(i)}
                 className="absolute top-1.5 right-1.5 w-6 h-6 rounded-full bg-black/70 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
               >
-                <HiOutlineX className="w-3.5 h-3.5 text-white" />
+                <HiOutlineX className="w-3.5 h-3.5 text-ag-text" />
               </button>
             </div>
           ))}
@@ -77,10 +77,10 @@ const PhotoUpload = ({ label, photos = [], onChange, maxFiles = 5, accept = 'ima
           onClick={() => fileRef.current?.click()}
           onDragOver={(e) => e.preventDefault()}
           onDrop={(e) => { e.preventDefault(); handleFiles(e.dataTransfer.files); }}
-          className="flex flex-col items-center justify-center gap-3 p-6 rounded-xl border-2 border-dashed border-white/10 hover:border-white/20 bg-white/[0.02] hover:bg-white/[0.04] cursor-pointer transition-all"
+          className="flex flex-col items-center justify-center gap-3 p-6 rounded-xl border-2 border-dashed border-ag-border hover:border-ag-border bg-white/[0.02] hover:bg-white/[0.04] cursor-pointer transition-all"
         >
           {uploading ? (
-            <div className="w-6 h-6 border-2 border-white/20 border-t-white rounded-full animate-spin" />
+            <div className="w-6 h-6 border-2 border-ag-border border-t-white rounded-full animate-spin" />
           ) : (
             <>
               <div className="flex items-center gap-2">

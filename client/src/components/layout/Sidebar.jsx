@@ -5,7 +5,7 @@ import { useAuth } from '../../context/AuthContext';
 import {
   HiOutlineViewGrid,
   HiOutlineShoppingCart,
-  HiOutlineDeviceMobile,
+  HiOutlinePhone,
   HiOutlineCog,
   HiOutlineCube,
   HiOutlineDocumentText,
@@ -14,12 +14,14 @@ import {
   HiOutlineLogout,
   HiOutlineX,
   HiOutlineTruck,
+  HiOutlineCurrencyRupee,
 } from 'react-icons/hi';
 
 const navItems = [
   { path: '/app', icon: HiOutlineViewGrid, label: 'Dashboard' },
+  { path: '/payments/daily', icon: HiOutlineCurrencyRupee, label: 'Daily Payments' },
   { path: '/sales', icon: HiOutlineShoppingCart, label: 'Sales' },
-  { path: '/secondhand', icon: HiOutlineDeviceMobile, label: 'Second-Hand' },
+  { path: '/secondhand', icon: HiOutlinePhone, label: 'Second-Hand' },
   { path: '/repairs', icon: HiOutlineCog, label: 'Repairs' },
   { path: '/customers', icon: HiOutlineUserGroup, label: 'Customers' },
   { path: '/inventory', icon: HiOutlineCube, label: 'Inventory' },
@@ -166,7 +168,7 @@ const SidebarContent = ({ filteredItems, user, isAdmin, handleLogout, onNavClick
       }}>
         <div className="flex items-center gap-3 mb-2.5">
           <div
-            className="w-8 h-8 rounded-full flex items-center justify-center text-white font-semibold text-xs shrink-0"
+            className="w-8 h-8 rounded-full flex items-center justify-center text-ag-text font-semibold text-xs shrink-0"
             style={{ background: 'linear-gradient(135deg, var(--om-accent), var(--om-purple))' }}
           >
             {user?.name?.charAt(0)?.toUpperCase() || 'U'}

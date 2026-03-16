@@ -70,7 +70,7 @@ const Signup = () => {
 
         <div className="pt-1">
           <motion.button whileHover={{ scale: 1.01 }} whileTap={{ scale: 0.99 }} type="submit" disabled={loading} className="ag-btn ag-btn-primary w-full py-3 h-12 text-sm font-semibold">
-            {loading ? <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" /> : 'Create Account'}
+            {loading ? <div className="w-5 h-5 border-2 border-ag-border border-t-white rounded-full animate-spin" /> : 'Create Account'}
           </motion.button>
         </div>
       </form>

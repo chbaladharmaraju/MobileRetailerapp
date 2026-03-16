@@ -89,7 +89,7 @@ const SearchableCustomerSelect = ({ customers, onSelect, value, onNewCustomer, p
           <button
             type="button"
             onClick={handleClear}
-            className="absolute right-3 top-1/2 -translate-y-1/2 p-1 rounded-full hover:bg-white/10 text-ag-text-dim transition-colors"
+            className="absolute right-3 top-1/2 -translate-y-1/2 p-1 rounded-full hover:bg-ag-bg-card text-ag-text-dim transition-colors"
           >
             <HiOutlineX className="w-4 h-4" />
           </button>
@@ -100,19 +100,19 @@ const SearchableCustomerSelect = ({ customers, onSelect, value, onNewCustomer, p
         {isOpen && (searchTerm.length > 0 || customers.length > 0) && (
           <motion.div
             initial={{ opacity: 0, scale: 0.98, y: 4 }} animate={{ opacity: 1, scale: 1, y: 0 }} exit={{ opacity: 0, scale: 0.98, y: 4 }}
-            className="absolute z-50 w-full mt-2 glass-card border border-white/10 shadow-2xl overflow-hidden max-h-80 flex flex-col"
+            className="absolute z-50 w-full mt-2 glass-card border border-ag-border shadow-2xl overflow-hidden max-h-80 flex flex-col"
           >
             <div className="flex-1 overflow-y-auto">
                 <button
                     type="button"
                     onClick={startAddingNew}
-                    className="w-full text-left px-4 py-3 bg-ag-primary/10 hover:bg-ag-primary/20 transition-all flex items-center gap-3 border-b border-white/10 group mb-1"
+                    className="w-full text-left px-4 py-3 bg-ag-primary/10 hover:bg-ag-primary/20 transition-all flex items-center gap-3 border-b border-ag-border group mb-1"
                 >
                     <div className="w-8 h-8 rounded-lg bg-ag-primary flex items-center justify-center text-black">
                         <HiOutlinePlus className="w-5 h-5" />
                     </div>
                     <div>
-                        <p className="text-sm font-bold text-white uppercase tracking-tighter">Register New Customer</p>
+                        <p className="text-sm font-bold text-ag-text uppercase tracking-tighter">Register New Customer</p>
                         <p className="text-[10px] text-ag-text-muted">Add a new person to the records</p>
                     </div>
                 </button>
@@ -123,14 +123,14 @@ const SearchableCustomerSelect = ({ customers, onSelect, value, onNewCustomer, p
                         key={c.id}
                         type="button"
                         onClick={() => handleSelect(c)}
-                        className={`w-full text-left px-4 py-3 transition-colors flex items-center justify-between group ${value === c.id ? 'bg-ag-primary/10 transition-none' : 'hover:bg-white/5'}`}
+                        className={`w-full text-left px-4 py-3 transition-colors flex items-center justify-between group ${value === c.id ? 'bg-ag-primary/10 transition-none' : 'hover:bg-ag-bg-card'}`}
                     >
                         <div className="flex items-center gap-3">
-                            <div className={`w-8 h-8 rounded-lg flex items-center justify-center text-sm font-bold ${value === c.id ? 'bg-ag-primary text-black' : 'bg-white/5 text-ag-text-dim group-hover:bg-white/10 group-hover:text-white transition-colors'}`}>
+                            <div className={`w-8 h-8 rounded-lg flex items-center justify-center text-sm font-bold ${value === c.id ? 'bg-ag-primary text-black' : 'bg-ag-bg-card text-ag-text-dim group-hover:bg-ag-bg-card group-hover:text-ag-text transition-colors'}`}>
                                 <HiOutlineUser className="w-4 h-4" />
                             </div>
                             <div>
-                                <p className={`text-sm font-medium transition-colors ${value === c.id ? 'text-ag-primary' : 'text-white'}`}>{c.name}</p>
+                                <p className={`text-sm font-medium transition-colors ${value === c.id ? 'text-ag-primary' : 'text-ag-text'}`}>{c.name}</p>
                                 <p className="text-[11px] text-ag-text-dim">{c.phone || 'No phone'}</p>
                             </div>
                         </div>
@@ -157,7 +157,7 @@ const SearchableCustomerSelect = ({ customers, onSelect, value, onNewCustomer, p
                 <div className="flex items-center gap-2 text-ag-primary font-bold text-xs uppercase tracking-widest">
                     <HiOutlinePlus className="w-4 h-4" /> New Customer Details
                 </div>
-                <button type="button" onClick={() => setIsAddingNew(false)} className="text-ag-text-dim hover:text-white transition-colors">
+                <button type="button" onClick={() => setIsAddingNew(false)} className="text-ag-text-dim hover:text-ag-text transition-colors">
                     <HiOutlineX className="w-4 h-4" />
                 </button>
             </div>
@@ -178,7 +178,7 @@ const SearchableCustomerSelect = ({ customers, onSelect, value, onNewCustomer, p
               </div>
             </div>
             <div className="flex justify-end gap-2 text-xs pt-1">
-               <button type="button" onClick={() => setIsAddingNew(false)} className="px-4 py-2 text-ag-text-dim hover:text-white transition-colors font-medium">Discard</button>
+               <button type="button" onClick={() => setIsAddingNew(false)} className="px-4 py-2 text-ag-text-dim hover:text-ag-text transition-colors font-medium">Discard</button>
                <button type="button" onClick={handleAddNew} className="px-5 py-2 bg-ag-primary text-black rounded-lg font-bold hover:bg-ag-primary/90 transition-all shadow-lg shadow-ag-primary/10">Register & Select</button>
             </div>
           </motion.div>

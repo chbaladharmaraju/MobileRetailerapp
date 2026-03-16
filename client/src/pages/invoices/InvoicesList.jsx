@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { HiOutlineEye } from 'react-icons/hi';
 import api from '../../services/api';
+import SearchBar from '../../components/common/SearchBar';
 
 const InvoicesList = () => {
   const [invoices, setInvoices] = useState([]);
@@ -28,11 +29,11 @@ const InvoicesList = () => {
   const InvoiceCard = ({ inv }) => {
     const customer = inv.sale?.customer?.name || inv.repair?.customer?.name || inv.secondHandSale?.intake?.customer?.name || '—';
     return (
-      <Link to={`/invoices/${inv.id}`} className="glass-card p-4 block hover:bg-white/[0.04] transition-all border-white/5 active:scale-[0.98]">
+      <Link to={`/invoices/${inv.id}`} className="glass-card bg-om-card border border-om-border p-4 block hover:bg-white/[0.04] transition-all border-om-border active:scale-[0.98]">
         <div className="flex justify-between items-start mb-3">
           <div>
-            <p className="font-mono text-xs text-white bg-white/5 px-2 py-1 rounded inline-block">{inv.invoiceNumber}</p>
-            <p className="text-[10px] text-ag-text-dim mt-1 uppercase tracking-widest leading-none">
+            <p className="font-mono text-xs text-om-text bg-om-surface px-2 py-1 rounded inline-block">{inv.invoiceNumber}</p>
+            <p className="text-[10px] text-om-text-secondary mt-1 uppercase tracking-widest leading-none">
               {new Date(inv.createdAt).toLocaleDateString('en-IN', { day: 'numeric', month: 'short' })}
             </p>
           </div>
@@ -40,10 +41,10 @@ const InvoicesList = () => {
         </div>
         <div className="flex justify-between items-end">
           <div>
-            <p className="text-xs text-ag-text-muted mb-0.5">Customer</p>
-            <p className="text-sm font-semibold text-white tracking-tight leading-tight">{customer}</p>
+            <p className="text-xs text-om-text-muted mb-0.5">Customer</p>
+            <p className="text-sm font-semibold text-om-text tracking-tight leading-tight">{customer}</p>
           </div>
-          <p className="text-base font-bold text-white tracking-tighter">₹{parseFloat(inv.grandTotal).toLocaleString('en-IN')}</p>
+          <p className="text-base font-bold text-om-text tracking-tighter">₹{parseFloat(inv.grandTotal).toLocaleString('en-IN')}</p>
         </div>
       </Link>
     );
@@ -54,26 +55,23 @@ const InvoicesList = () => {
       
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-white tracking-tight">Invoice History</h1>
-          <p className="text-xs text-ag-text-dim mt-1 uppercase tracking-widest">{invoices.length} total generated</p>
-        </div>
-        <div className="w-full sm:w-72">
-          <input
-            type="text"
-            placeholder="Search invoice or customer..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            className="ag-input text-xs"
-          />
+          <h1 className="text-2xl font-bold text-om-text tracking-tight">Invoice History</h1>
+          <p className="text-xs text-om-text-secondary mt-1 uppercase tracking-widest">{invoices.length} total generated</p>
         </div>
       </div>
 
+      <SearchBar 
+        value={searchTerm} 
+        onChange={setSearchTerm} 
+        placeholder="Search invoice or customer..."
+      />
+
       {loading ? (
         <div className="flex items-center justify-center h-64">
-           <div className="w-6 h-6 border-2 border-white/20 border-t-white rounded-full animate-spin" />
+           <div className="w-6 h-6 border-2 border-ag-border border-t-white rounded-full animate-spin" />
         </div>
       ) : filteredInvoices.length === 0 ? (
-        <div className="glass-card p-20 text-center text-ag-text-dim text-sm">
+        <div className="glass-card bg-om-card border border-om-border p-20 text-center text-om-text-secondary text-sm">
           No matching invoices found.
         </div>
       ) : (
@@ -86,7 +84,7 @@ const InvoicesList = () => {
           </div>
 
           {/* Desktop View */}
-          <div className="glass-card overflow-hidden hidden sm:block">
+          <div className="glass-card bg-om-card border border-om-border overflow-hidden hidden sm:block">
             <div className="overflow-x-auto">
               <table className="ag-table w-full">
                 <thead>
@@ -104,15 +102,15 @@ const InvoicesList = () => {
                     const customer = inv.sale?.customer?.name || inv.repair?.customer?.name || inv.secondHandSale?.intake?.customer?.name || '—';
                     return (
                       <motion.tr key={inv.id} initial={{ opacity: 0, y: 5 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.02 }}>
-                        <td className="font-mono text-white text-xs tracking-tight">{inv.invoiceNumber}</td>
+                        <td className="font-mono text-om-text text-xs tracking-tight">{inv.invoiceNumber}</td>
                         <td><span className={`ag-badge ${typeColors[inv.type]} scale-90 origin-left`}>{typeLabels[inv.type]}</span></td>
-                        <td className="text-white font-medium">{customer}</td>
-                        <td className="text-right text-white font-bold tracking-tighter">₹{parseFloat(inv.grandTotal).toLocaleString('en-IN')}</td>
-                        <td className="text-ag-text-muted text-xs tracking-wide">
+                        <td className="text-om-text font-medium">{customer}</td>
+                        <td className="text-right text-om-text font-bold tracking-tighter">₹{parseFloat(inv.grandTotal).toLocaleString('en-IN')}</td>
+                        <td className="text-om-text-muted text-xs tracking-wide">
                           {new Date(inv.createdAt).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })}
                         </td>
                         <td className="text-right">
-                          <Link to={`/invoices/${inv.id}`} className="ag-btn bg-white/5 hover:bg-white/10 text-white p-2 h-auto inline-flex">
+                          <Link to={`/invoices/${inv.id}`} className="ag-btn bg-om-surface hover:bg-om-border text-om-text p-2 h-auto inline-flex">
                             <HiOutlineEye className="w-4 h-4" />
                           </Link>
                         </td>

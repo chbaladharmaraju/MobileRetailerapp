@@ -113,6 +113,13 @@
   --color-ag-red: var(--om-red);
   --color-ag-yellow: var(--om-yellow);
   --color-ag-purple: var(--om-purple);
+  
+  /* Additional Aliases for dynamic theming */
+  --color-ag-text-base: var(--om-text);
+  --color-ag-text-title: var(--om-text);
+  --color-ag-bg-card: var(--om-card);
+  --color-ag-bg-input: var(--om-input-bg);
+  --color-ag-border: var(--om-border);
 }
 
 /* ─── Global Styles ──────────────────────────────────────────────────── */

@@ -148,7 +148,7 @@ const RepairDetails = () => {
 
   if (loading) return (
     <div className="flex items-center justify-center min-h-[400px]">
-      <div className="w-8 h-8 border-2 border-white/20 border-t-white rounded-full animate-spin" />
+      <div className="w-8 h-8 border-2 border-ag-border border-t-white rounded-full animate-spin" />
     </div>
   );
 
@@ -159,14 +159,14 @@ const RepairDetails = () => {
       {/* Header */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
         <div className="flex items-center gap-4">
-          <Link to="/repairs" className="p-2.5 rounded-xl bg-white/5 hover:bg-white/10 text-white transition-colors border border-white/10">
+          <Link to="/repairs" className="p-2.5 rounded-xl bg-om-surface hover:bg-om-border text-om-text transition-colors border-om-border">
             <HiOutlineArrowLeft className="w-5 h-5" />
           </Link>
           <div>
-            <h1 className="text-xl font-bold text-white tracking-tight">
+            <h1 className="text-xl font-bold text-om-text tracking-tight">
               {repair.deviceBrand} {repair.deviceModel}
             </h1>
-            <p className="text-sm text-ag-text-muted mt-0.5">
+            <p className="text-sm text-om-text-muted mt-0.5">
               {new Date(repair.createdAt).toLocaleDateString('en-IN', { day: 'numeric', month: 'long', year: 'numeric' })}
             </p>
           </div>
@@ -220,8 +220,8 @@ const RepairDetails = () => {
       </div>
 
       {/* Status Progress Bar */}
-      <div className="glass-card p-6 mb-8 border border-white/[0.08]">
-        <h3 className="text-[10px] font-bold text-ag-text-dim uppercase tracking-[0.25em] mb-5">Repair Status</h3>
+      <div className="glass-card bg-om-card border border-om-border p-6 mb-8 border-om-border">
+        <h3 className="text-[10px] font-bold text-om-text-secondary uppercase tracking-[0.25em] mb-5">Repair Status</h3>
         <div className="flex items-center justify-between gap-2 overflow-x-auto pb-2">
           {STATUS_FLOW.map((s, i) => (
             <div key={s} className="flex items-center gap-2 flex-1 min-w-0">
@@ -230,21 +230,21 @@ const RepairDetails = () => {
                 disabled={i <= currentIdx || i === 4 || updatingStatus}
                 className={`flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center text-[10px] font-bold transition-all border ${
                   i < currentIdx ? 'bg-green-500/20 text-green-400 border-green-500/30' :
-                  i === currentIdx ? 'bg-white/15 text-white border-white/30 scale-110 shadow-[0_0_15px_rgba(255,255,255,0.1)]' :
-                  'bg-white/[0.03] text-ag-text-dim border-white/5 hover:bg-white/[0.06] cursor-pointer disabled:cursor-default disabled:hover:bg-white/[0.03]'
+                  i === currentIdx ? 'bg-ag-bg-card text-om-text border-ag-border scale-110 shadow-[0_0_15px_rgba(255,255,255,0.1)]' :
+                  'bg-om-surface text-om-text-secondary border-om-border hover:bg-white/[0.06] cursor-pointer disabled:cursor-default disabled:hover:bg-om-surface'
                 }`}
               >
                 {i < currentIdx ? '✓' : i + 1}
               </button>
               {i < STATUS_FLOW.length - 1 && (
-                <div className={`flex-1 h-px ${i < currentIdx ? 'bg-green-500/30' : 'bg-white/10'}`} />
+                <div className={`flex-1 h-px ${i < currentIdx ? 'bg-green-500/30' : 'bg-om-border'}`} />
               )}
             </div>
           ))}
         </div>
         <div className="flex justify-between mt-2 overflow-x-auto">
           {STATUS_FLOW.map((s) => (
-            <p key={s} className="text-[9px] text-ag-text-dim uppercase tracking-wider flex-1 text-center min-w-0 truncate px-1">
+            <p key={s} className="text-[9px] text-om-text-secondary uppercase tracking-wider flex-1 text-center min-w-0 truncate px-1">
               {s.replace('_', ' ')}
             </p>
           ))}
@@ -256,23 +256,23 @@ const RepairDetails = () => {
         {/* Left Column */}
         <div className="space-y-6">
           {/* Device Info */}
-          <div className="glass-card p-6 border border-white/[0.08]">
-            <h3 className="text-sm font-semibold text-white uppercase tracking-wider mb-5 flex items-center gap-2">
+          <div className="glass-card bg-om-card border border-om-border p-6 border-om-border">
+            <h3 className="text-sm font-semibold text-om-text uppercase tracking-wider mb-5 flex items-center gap-2">
               <HiOutlineCog className="w-4 h-4" /> Device Info
             </h3>
             <div className="space-y-4">
               <div>
-                <p className="text-[10px] text-ag-text-dim uppercase tracking-widest font-bold mb-1">Brand & Model</p>
-                <p className="text-base font-medium text-white">{repair.deviceBrand} {repair.deviceModel}</p>
+                <p className="text-[10px] text-om-text-secondary uppercase tracking-widest font-bold mb-1">Brand & Model</p>
+                <p className="text-base font-medium text-om-text">{repair.deviceBrand} {repair.deviceModel}</p>
               </div>
               {repair.imei && (
                 <div>
-                  <p className="text-[10px] text-ag-text-dim uppercase tracking-widest font-bold mb-1">IMEI</p>
-                  <p className="text-sm font-mono text-white/80">{repair.imei}</p>
+                  <p className="text-[10px] text-om-text-secondary uppercase tracking-widest font-bold mb-1">IMEI</p>
+                  <p className="text-sm font-mono text-om-text/80">{repair.imei}</p>
                 </div>
               )}
               <div>
-                <p className="text-[10px] text-ag-text-dim uppercase tracking-widest font-bold mb-1">Status</p>
+                <p className="text-[10px] text-om-text-secondary uppercase tracking-widest font-bold mb-1">Status</p>
                 <span className={`inline-flex items-center px-3 py-1 text-[10px] font-bold tracking-wider uppercase rounded-full border ${statusColors[repair.status]}`}>
                   {repair.status.replace('_', ' ')}
                 </span>
@@ -281,20 +281,20 @@ const RepairDetails = () => {
           </div>
 
           {/* Customer Info */}
-          <div className="glass-card p-6 border border-white/[0.08]">
-            <h3 className="text-sm font-semibold text-white uppercase tracking-wider mb-5">Customer</h3>
+          <div className="glass-card bg-om-card border border-om-border p-6 border-om-border">
+            <h3 className="text-sm font-semibold text-om-text uppercase tracking-wider mb-5">Customer</h3>
             <div className="space-y-3">
               <div>
-                <p className="text-[10px] text-ag-text-dim uppercase tracking-widest font-bold mb-1">Name</p>
-                <p className="text-sm font-medium text-white">{repair.customer?.name}</p>
+                <p className="text-[10px] text-om-text-secondary uppercase tracking-widest font-bold mb-1">Name</p>
+                <p className="text-sm font-medium text-om-text">{repair.customer?.name}</p>
               </div>
               <div>
-                <p className="text-[10px] text-ag-text-dim uppercase tracking-widest font-bold mb-1">Phone</p>
-                <p className="text-sm text-white/80">{repair.customer?.phone}</p>
+                <p className="text-[10px] text-om-text-secondary uppercase tracking-widest font-bold mb-1">Phone</p>
+                <p className="text-sm text-om-text/80">{repair.customer?.phone}</p>
               </div>
               <div>
-                <p className="text-[10px] text-ag-text-dim uppercase tracking-widest font-bold mb-1">Handled By</p>
-                <p className="text-sm text-white/80">{repair.user?.name}</p>
+                <p className="text-[10px] text-om-text-secondary uppercase tracking-widest font-bold mb-1">Handled By</p>
+                <p className="text-sm text-om-text/80">{repair.user?.name}</p>
               </div>
             </div>
           </div>
@@ -303,48 +303,48 @@ const RepairDetails = () => {
         {/* Right Column */}
         <div className="lg:col-span-2 space-y-6">
           {/* Issue & Notes */}
-          <div className="glass-card p-6 border border-white/[0.08]">
-            <h3 className="text-sm font-semibold text-white uppercase tracking-wider mb-5 flex items-center gap-2">
+          <div className="glass-card bg-om-card border border-om-border p-6 border-om-border">
+            <h3 className="text-sm font-semibold text-om-text uppercase tracking-wider mb-5 flex items-center gap-2">
               <HiOutlineClipboardCheck className="w-4 h-4" /> Issue Details
             </h3>
             <div className="space-y-4">
               <div>
-                <p className="text-[10px] text-ag-text-dim uppercase tracking-widest font-bold mb-2">Issue Description</p>
-                <p className="text-sm text-ag-text leading-relaxed bg-white/[0.02] rounded-xl p-4 border border-white/5">
+                <p className="text-[10px] text-om-text-secondary uppercase tracking-widest font-bold mb-2">Issue Description</p>
+                <p className="text-sm text-om-text leading-relaxed bg-om-surface rounded-xl p-4 border-om-border">
                   {repair.issueDescription}
                 </p>
               </div>
               {repair.notes && (
                 <div>
-                  <p className="text-[10px] text-ag-text-dim uppercase tracking-widest font-bold mb-2">Additional Notes</p>
-                  <p className="text-sm text-ag-text-muted italic">{repair.notes}</p>
+                  <p className="text-[10px] text-om-text-secondary uppercase tracking-widest font-bold mb-2">Additional Notes</p>
+                  <p className="text-sm text-om-text-muted italic">{repair.notes}</p>
                 </div>
               )}
             </div>
           </div>
 
           {/* Financials */}
-          <div className="glass-card p-6 border border-white/[0.08] bg-black/40">
-            <h3 className="text-sm font-semibold text-white uppercase tracking-wider mb-5 flex items-center gap-2">
+          <div className="glass-card bg-om-card border border-om-border p-6 border-om-border bg-om-surface">
+            <h3 className="text-sm font-semibold text-om-text uppercase tracking-wider mb-5 flex items-center gap-2">
               <HiOutlineCurrencyRupee className="w-4 h-4" /> Financials
             </h3>
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-              <div className="p-4 rounded-xl bg-white/[0.02] border border-white/5">
-                <p className="text-[10px] text-ag-text-dim uppercase tracking-widest font-bold mb-2">Estimated</p>
-                <p className="text-lg font-bold text-white">{formatCurrency(repair.estimatedCost)}</p>
+              <div className="p-4 rounded-xl bg-om-surface border-om-border">
+                <p className="text-[10px] text-om-text-secondary uppercase tracking-widest font-bold mb-2">Estimated</p>
+                <p className="text-lg font-bold text-om-text">{formatCurrency(repair.estimatedCost)}</p>
               </div>
-              <div className="p-4 rounded-xl bg-white/[0.02] border border-white/5">
-                <p className="text-[10px] text-ag-text-dim uppercase tracking-widest font-bold mb-2">Parts Cost</p>
-                <p className="text-lg font-bold text-white">
+              <div className="p-4 rounded-xl bg-om-surface border-om-border">
+                <p className="text-[10px] text-om-text-secondary uppercase tracking-widest font-bold mb-2">Parts Cost</p>
+                <p className="text-lg font-bold text-om-text">
                   {formatCurrency(repair.parts?.reduce((sum, p) => sum + parseFloat(p.unitCost) * p.quantity, 0) || 0)}
                 </p>
               </div>
-              <div className="p-4 rounded-xl bg-white/[0.02] border border-white/5">
-                <p className="text-[10px] text-ag-text-dim uppercase tracking-widest font-bold mb-2">Service Charge</p>
-                <p className="text-lg font-bold text-white">{formatCurrency(repair.serviceCharge)}</p>
+              <div className="p-4 rounded-xl bg-om-surface border-om-border">
+                <p className="text-[10px] text-om-text-secondary uppercase tracking-widest font-bold mb-2">Service Charge</p>
+                <p className="text-lg font-bold text-om-text">{formatCurrency(repair.serviceCharge)}</p>
               </div>
-              <div className="p-4 rounded-xl bg-white/[0.02] border border-white/5">
-                <p className="text-[10px] text-ag-text-dim uppercase tracking-widest font-bold mb-2">Profit</p>
+              <div className="p-4 rounded-xl bg-om-surface border-om-border">
+                <p className="text-[10px] text-om-text-secondary uppercase tracking-widest font-bold mb-2">Profit</p>
                 <p className={`text-lg font-bold ${parseFloat(repair.totalProfit || 0) >= 0 ? 'text-green-400' : 'text-red-400'}`}>
                   {formatCurrency(repair.totalProfit)}
                 </p>
@@ -354,9 +354,9 @@ const RepairDetails = () => {
 
           {/* Parts Used */}
           {repair.parts && repair.parts.length > 0 && (
-            <div className="glass-card overflow-hidden border border-white/[0.08]">
-              <div className="p-5 border-b border-white/5 bg-black/20">
-                <h3 className="text-sm font-semibold text-white tracking-wide">Parts Used</h3>
+            <div className="glass-card bg-om-card border border-om-border overflow-hidden border-om-border">
+              <div className="p-5 border-b border-om-border bg-om-surface">
+                <h3 className="text-sm font-semibold text-om-text tracking-wide">Parts Used</h3>
               </div>
               <div className="overflow-x-auto">
                 <table className="ag-table w-full">
@@ -372,11 +372,11 @@ const RepairDetails = () => {
                   <tbody>
                     {repair.parts.map((part) => (
                       <tr key={part.id}>
-                        <td className="font-medium text-white">{part.sparePart?.name}</td>
-                        <td className="text-ag-text-muted">{part.sparePart?.category}</td>
-                        <td className="text-center text-white">{part.quantity}</td>
-                        <td className="text-right text-ag-text-muted">{formatCurrency(part.unitCost)}</td>
-                        <td className="text-right font-semibold text-white">{formatCurrency(parseFloat(part.unitCost) * part.quantity)}</td>
+                        <td className="font-medium text-om-text">{part.sparePart?.name}</td>
+                        <td className="text-om-text-muted">{part.sparePart?.category}</td>
+                        <td className="text-center text-om-text">{part.quantity}</td>
+                        <td className="text-right text-om-text-muted">{formatCurrency(part.unitCost)}</td>
+                        <td className="text-right font-semibold text-om-text">{formatCurrency(parseFloat(part.unitCost) * part.quantity)}</td>
                       </tr>
                     ))}
                   </tbody>
@@ -387,27 +387,27 @@ const RepairDetails = () => {
 
           {/* Photos */}
           {(repair.beforePhotos?.length > 0 || repair.afterPhotos?.length > 0) && (
-            <div className="glass-card p-6 border border-white/[0.08]">
-              <h3 className="text-sm font-semibold text-white uppercase tracking-wider mb-5 flex items-center gap-2">
+            <div className="glass-card bg-om-card border border-om-border p-6 border-om-border">
+              <h3 className="text-sm font-semibold text-om-text uppercase tracking-wider mb-5 flex items-center gap-2">
                 <HiOutlinePhotograph className="w-4 h-4" /> Photos
               </h3>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                 {repair.beforePhotos?.length > 0 && (
                   <div>
-                    <p className="text-[10px] text-ag-text-dim uppercase tracking-widest font-bold mb-3">Before</p>
+                    <p className="text-[10px] text-om-text-secondary uppercase tracking-widest font-bold mb-3">Before</p>
                     <div className="grid grid-cols-2 gap-2">
                       {repair.beforePhotos.map((url, i) => (
-                        <img key={i} src={getImageUrl(url)} alt={`Before ${i+1}`} className="rounded-lg border border-white/10 w-full h-32 object-cover" />
+                        <img key={i} src={getImageUrl(url)} alt={`Before ${i+1}`} className="rounded-lg border-om-border w-full h-32 object-cover" />
                       ))}
                     </div>
                   </div>
                 )}
                 {repair.afterPhotos?.length > 0 && (
                   <div>
-                    <p className="text-[10px] text-ag-text-dim uppercase tracking-widest font-bold mb-3">After</p>
+                    <p className="text-[10px] text-om-text-secondary uppercase tracking-widest font-bold mb-3">After</p>
                     <div className="grid grid-cols-2 gap-2">
                       {repair.afterPhotos.map((url, i) => (
-                        <img key={i} src={getImageUrl(url)} alt={`After ${i+1}`} className="rounded-lg border border-white/10 w-full h-32 object-cover" />
+                        <img key={i} src={getImageUrl(url)} alt={`After ${i+1}`} className="rounded-lg border-om-border w-full h-32 object-cover" />
                       ))}
                     </div>
                   </div>
@@ -418,12 +418,12 @@ const RepairDetails = () => {
 
           {/* Invoice Info */}
           {repair.invoice && (
-            <div className="glass-card p-6 border border-white/[0.08] bg-gradient-to-br from-green-500/5 to-transparent">
+            <div className="glass-card bg-om-card border border-om-border p-6 border-om-border bg-gradient-to-br from-green-500/5 to-transparent">
               <div className="flex justify-between items-center">
                 <div>
-                  <p className="text-[10px] text-ag-text-dim uppercase tracking-widest font-bold mb-1">Invoice Number</p>
-                  <p className="text-xl font-bold text-white tracking-wider">{repair.invoice.invoiceNumber}</p>
-                  <p className="text-xs text-ag-text-muted mt-1">
+                  <p className="text-[10px] text-om-text-secondary uppercase tracking-widest font-bold mb-1">Invoice Number</p>
+                  <p className="text-xl font-bold text-om-text tracking-wider">{repair.invoice.invoiceNumber}</p>
+                  <p className="text-xs text-om-text-muted mt-1">
                     Generated on {new Date(repair.invoice.createdAt).toLocaleDateString('en-IN', { day: 'numeric', month: 'long', year: 'numeric' })}
                   </p>
                 </div>
@@ -435,22 +435,22 @@ const RepairDetails = () => {
           )}
 
           {/* Timeline */}
-          <div className="glass-card p-6 border border-white/[0.08]">
-            <h3 className="text-sm font-semibold text-white uppercase tracking-wider mb-5">Timeline</h3>
+          <div className="glass-card bg-om-card border border-om-border p-6 border-om-border">
+            <h3 className="text-sm font-semibold text-om-text uppercase tracking-wider mb-5">Timeline</h3>
             <div className="space-y-4">
               <div className="flex items-start gap-4">
                 <div className="w-2 h-2 rounded-full bg-blue-400 mt-2 flex-shrink-0" />
                 <div>
-                  <p className="text-sm text-white font-medium">Intake Created</p>
-                  <p className="text-xs text-ag-text-muted">{new Date(repair.createdAt).toLocaleString('en-IN')}</p>
+                  <p className="text-sm text-om-text font-medium">Intake Created</p>
+                  <p className="text-xs text-om-text-muted">{new Date(repair.createdAt).toLocaleString('en-IN')}</p>
                 </div>
               </div>
               {repair.completedAt && (
                 <div className="flex items-start gap-4">
                   <div className="w-2 h-2 rounded-full bg-green-400 mt-2 flex-shrink-0" />
                   <div>
-                    <p className="text-sm text-white font-medium">Completed</p>
-                    <p className="text-xs text-ag-text-muted">{new Date(repair.completedAt).toLocaleString('en-IN')}</p>
+                    <p className="text-sm text-om-text font-medium">Completed</p>
+                    <p className="text-xs text-om-text-muted">{new Date(repair.completedAt).toLocaleString('en-IN')}</p>
                   </div>
                 </div>
               )}
@@ -458,8 +458,8 @@ const RepairDetails = () => {
                 <div className="flex items-start gap-4">
                   <div className="w-2 h-2 rounded-full bg-green-400 mt-2 flex-shrink-0" />
                   <div>
-                    <p className="text-sm text-white font-medium">Delivered to Customer</p>
-                    <p className="text-xs text-ag-text-muted">{new Date(repair.deliveredAt).toLocaleString('en-IN')}</p>
+                    <p className="text-sm text-om-text font-medium">Delivered to Customer</p>
+                    <p className="text-xs text-om-text-muted">{new Date(repair.deliveredAt).toLocaleString('en-IN')}</p>
                   </div>
                 </div>
               )}
@@ -477,17 +477,17 @@ const RepairDetails = () => {
           >
             <motion.div
               initial={{ scale: 0.95, y: 20 }} animate={{ scale: 1, y: 0 }} exit={{ scale: 0.95, y: 20 }}
-              className="bg-[#0a0a0a] border border-white/10 rounded-2xl p-6 w-full max-w-md shadow-2xl relative overflow-hidden"
+              className="bg-om-bg border-om-border rounded-2xl p-6 w-full max-w-md shadow-2xl relative overflow-hidden"
             >
               <div className="absolute top-0 inset-x-0 h-1 bg-gradient-to-r from-transparent via-green-400/30 to-transparent" />
-              <h3 className="text-lg font-semibold text-white mb-2">Complete Repair</h3>
-              <p className="text-sm text-ag-text-muted mb-6">Enter the final costs and service charge to mark this repair as completed.</p>
+              <h3 className="text-lg font-semibold text-om-text mb-2">Complete Repair</h3>
+              <p className="text-sm text-om-text-muted mb-6">Enter the final costs and service charge to mark this repair as completed.</p>
 
               <form onSubmit={handleComplete} className="space-y-4">
                 <div>
-                  <label className="text-xs font-medium text-ag-text-dim uppercase tracking-wider ml-1 mb-1 block">Final Parts Cost (₹)</label>
+                  <label className="text-xs font-medium text-om-text-secondary uppercase tracking-wider ml-1 mb-1 block">Final Parts Cost (₹)</label>
                   <div className="relative">
-                    <span className="absolute left-4 top-1/2 -translate-y-1/2 text-ag-text-dim font-bold">₹</span>
+                    <span className="absolute left-4 top-1/2 -translate-y-1/2 text-om-text-secondary font-bold">₹</span>
                     <input
                       type="number" step="0.01" min="0"
                       value={completeForm.finalCost}
@@ -499,9 +499,9 @@ const RepairDetails = () => {
                 </div>
 
                 <div>
-                  <label className="text-xs font-medium text-ag-text-dim uppercase tracking-wider ml-1 mb-1 block">Service Charge (₹) *</label>
+                  <label className="text-xs font-medium text-om-text-secondary uppercase tracking-wider ml-1 mb-1 block">Service Charge (₹) *</label>
                   <div className="relative">
-                    <span className="absolute left-4 top-1/2 -translate-y-1/2 text-ag-text-dim font-bold">₹</span>
+                    <span className="absolute left-4 top-1/2 -translate-y-1/2 text-om-text-secondary font-bold">₹</span>
                     <input
                       type="number" step="0.01" min="0" required
                       value={completeForm.serviceCharge}
@@ -513,7 +513,7 @@ const RepairDetails = () => {
                 </div>
 
                 <div>
-                  <label className="text-xs font-medium text-ag-text-dim uppercase tracking-wider ml-1 mb-1 block">Notes (Optional)</label>
+                  <label className="text-xs font-medium text-om-text-secondary uppercase tracking-wider ml-1 mb-1 block">Notes (Optional)</label>
                   <textarea
                     value={completeForm.notes}
                     onChange={(e) => setCompleteForm({...completeForm, notes: e.target.value})}
@@ -531,8 +531,8 @@ const RepairDetails = () => {
                 />
 
                 {/* Profit Preview */}
-                <div className="bg-white/[0.03] rounded-xl p-4 border border-white/5">
-                  <p className="text-xs text-ag-text-dim uppercase tracking-wider mb-1">Estimated Profit</p>
+                <div className="bg-om-surface rounded-xl p-4 border-om-border">
+                  <p className="text-xs text-om-text-secondary uppercase tracking-wider mb-1">Estimated Profit</p>
                   <p className={`text-xl font-bold ${
                     (parseFloat(completeForm.serviceCharge || 0) - parseFloat(completeForm.finalCost || 0)) >= 0
                       ? 'text-green-400' : 'text-red-400'
@@ -542,7 +542,7 @@ const RepairDetails = () => {
                 </div>
 
                 <div className="flex gap-3 pt-4">
-                  <button type="button" onClick={() => setShowCompleteModal(false)} className="ag-btn bg-white/5 hover:bg-white/10 text-white flex-1 border border-white/5">
+                  <button type="button" onClick={() => setShowCompleteModal(false)} className="ag-btn bg-om-surface hover:bg-om-border text-om-text flex-1 border-om-border">
                     Cancel
                   </button>
                   <button type="submit" disabled={submitting} className="ag-btn ag-btn-primary flex-1">

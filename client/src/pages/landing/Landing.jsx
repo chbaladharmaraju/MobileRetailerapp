@@ -1,11 +1,11 @@
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { HiOutlineDeviceMobile, HiOutlineReceiptRefund, HiOutlineCash, HiOutlineChartBar, HiOutlineArrowRight, HiOutlineCheck } from 'react-icons/hi';
+import { HiOutlinePhone, HiOutlineReceiptRefund, HiOutlineCash, HiOutlineChartBar, HiOutlineArrowRight, HiOutlineCheck } from 'react-icons/hi';
 import ParticleBackground from '../../components/common/ParticleBackground';
 
 const featureCards = [
   {
-    icon: HiOutlineDeviceMobile,
+    icon: HiOutlinePhone,
     title: 'Smart Inventory',
     body: 'Manage new phones, used intakes, and accessories. Track stock levels with real-time alerts and low-stock indicators.',
     iconBg: 'rgba(79, 140, 255, 0.15)',
@@ -76,12 +76,12 @@ const Landing = () => {
 
         <div className="flex items-center gap-3 sm:gap-5">
           <Link to="/login"
-            className="px-7 py-2.5 sm:py-3 rounded-lg text-xs sm:text-sm font-semibold text-slate-300 border border-white/10 hover:border-orange-500/40 hover:bg-orange-500/[0.04] transition-all duration-500 ease-in-out"
+            className="px-7 py-2.5 sm:py-3 rounded-lg text-xs sm:text-sm font-semibold text-slate-300 border border-ag-border hover:border-orange-500/40 hover:bg-orange-500/[0.04] transition-all duration-500 ease-in-out"
             style={{ backdropFilter: 'blur(12px)' }}>
             Log in
           </Link>
           <Link to="/signup"
-            className="px-7 py-2.5 sm:py-3 rounded-lg text-xs sm:text-sm font-bold bg-gradient-to-r from-orange-500 to-orange-600 text-white shadow-lg shadow-orange-500/25 hover:shadow-orange-500/50 hover:scale-[1.05] active:scale-[0.98] transition-all duration-500 ease-in-out">
+            className="px-7 py-2.5 sm:py-3 rounded-lg text-xs sm:text-sm font-bold bg-gradient-to-r from-orange-500 to-orange-600 text-ag-text shadow-lg shadow-orange-500/25 hover:shadow-orange-500/50 hover:scale-[1.05] active:scale-[0.98] transition-all duration-500 ease-in-out">
             Get started
           </Link>
         </div>
@@ -122,7 +122,7 @@ const Landing = () => {
             </motion.div>
 
             {/* Headline */}
-            <h1 className="text-[2rem] sm:text-[2.8rem] lg:text-[3.4rem] font-bold tracking-tight text-white leading-[1.1] max-w-3xl mx-auto">
+            <h1 className="text-[2rem] sm:text-[2.8rem] lg:text-[3.4rem] font-bold tracking-tight text-ag-text leading-[1.1] max-w-3xl mx-auto">
               Run your entire{' '}
               <span className="bg-gradient-to-r from-orange-400 via-amber-400 to-orange-500 bg-clip-text text-transparent">
                 mobile store
@@ -150,14 +150,14 @@ const Landing = () => {
             >
               <Link
                 to="/signup"
-                className="group w-full sm:w-auto inline-flex items-center justify-center gap-4 px-12 py-5 rounded-lg text-base sm:text-lg font-bold bg-gradient-to-r from-orange-500 to-orange-600 text-white shadow-[0_10px_40px_-10px_rgba(249,115,22,0.5)] hover:shadow-[0_15px_50px_-10px_rgba(249,115,22,0.6)] hover:scale-[1.05] active:scale-[0.96] transition-all duration-500 ease-in-out"
+                className="group w-full sm:w-auto inline-flex items-center justify-center gap-4 px-12 py-5 rounded-lg text-base sm:text-lg font-bold bg-gradient-to-r from-orange-500 to-orange-600 text-ag-text shadow-[0_10px_40px_-10px_rgba(249,115,22,0.5)] hover:shadow-[0_15px_50px_-10px_rgba(249,115,22,0.6)] hover:scale-[1.05] active:scale-[0.96] transition-all duration-500 ease-in-out"
               >
                 Start For Your Shop
                 <HiOutlineArrowRight className="w-6 h-6 group-hover:translate-x-3 transition-transform duration-500" />
               </Link>
               <Link
                 to="/login"
-                className="w-full sm:w-auto inline-flex items-center justify-center px-12 py-5 rounded-lg text-sm sm:text-base font-semibold text-slate-300 border border-white/10 hover:border-orange-500/40 hover:bg-orange-500/[0.04] transition-all duration-500 ease-in-out"
+                className="w-full sm:w-auto inline-flex items-center justify-center px-12 py-5 rounded-lg text-sm sm:text-base font-semibold text-slate-300 border border-ag-border hover:border-orange-500/40 hover:bg-orange-500/[0.04] transition-all duration-500 ease-in-out"
                 style={{ backdropFilter: 'blur(12px)' }}
               >
                 Already using Orange Mobile Retail?
@@ -176,7 +176,7 @@ const Landing = () => {
               transition={{ duration: 0.8, ease: [0.25, 1, 0.5, 1] }}
               className="space-y-8"
             >
-              <h2 className="text-[2.2rem] sm:text-[2.8rem] font-bold text-white tracking-tight leading-[1.1]">
+              <h2 className="text-[2.2rem] sm:text-[2.8rem] font-bold text-ag-text tracking-tight leading-[1.1]">
                 Verified <span className="bg-gradient-to-r from-orange-400 to-orange-500 bg-clip-text text-transparent">Secure</span>.
               </h2>
               <p className="text-lg text-slate-400 leading-relaxed font-medium">
@@ -222,7 +222,7 @@ const Landing = () => {
                 >
                   <img src="https://res.cloudinary.com/dogxrczp3/image/upload/v1773350425/logo_2_qlc6y5.png" alt="Orange Mobile Logo" className="w-full h-full object-contain" />
                 </motion.div>
-                <p className="text-sm font-bold text-white tracking-[0.4em] uppercase opacity-90">Verified Secure</p>
+                <p className="text-sm font-bold text-ag-text tracking-[0.4em] uppercase opacity-90">Verified Secure</p>
               </div>
             </motion.div>
           </div>
@@ -246,7 +246,7 @@ const Landing = () => {
             <p className="text-xs font-bold text-orange-500 uppercase tracking-[0.4em] mb-8">
               How the app was
             </p>
-            <h3 className="text-xl sm:text-2xl font-bold text-white mb-6 leading-relaxed">
+            <h3 className="text-xl sm:text-2xl font-bold text-ag-text mb-6 leading-relaxed">
               Experience absolute precision in inventory, sales, and analytics with Orange Mobile Retail’s premium management ecosystem.
             </h3>
             <div className="flex justify-center gap-2">
@@ -273,7 +273,7 @@ const Landing = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.1 }}
-              className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white tracking-tight"
+              className="text-3xl sm:text-4xl lg:text-5xl font-bold text-ag-text tracking-tight"
             >
               Everything Your Shop Needs.
             </motion.h2>
@@ -308,7 +308,7 @@ const Landing = () => {
                   >
                     <card.icon className="w-7 h-7" />
                   </div>
-                  <h3 className="text-xl font-bold text-white mb-4 tracking-tight">{card.title}</h3>
+                  <h3 className="text-xl font-bold text-ag-text mb-4 tracking-tight">{card.title}</h3>
                   <p className="text-[14px] text-slate-400 leading-relaxed font-medium">{card.body}</p>
                 </div>
               </motion.div>

@@ -1,12 +1,20 @@
 import { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
-import { HiOutlineUserGroup, HiOutlinePlus, HiOutlineSearch, HiOutlineShieldExclamation, HiOutlineCheckCircle } from 'react-icons/hi';
+import { motion } from 'framer-motion';
+import { HiOutlinePlus, HiOutlineCheckCircle, HiOutlineUserGroup, HiOutlineShieldExclamation } from 'react-icons/hi';
 import api from '../../services/api';
 import toast from 'react-hot-toast';
+import SearchBar from '../../components/common/SearchBar';
 
-const containerVariants = { hidden: { opacity: 0 }, show: { opacity: 1, transition: { staggerChildren: 0.1 } } };
-const itemVariants = { hidden: { opacity: 0, y: 15 }, show: { opacity: 1, y: 0, transition: { type: 'spring', stiffness: 300, damping: 24 } } };
+const containerVariants = {
+  hidden: { opacity: 0 },
+  show: { opacity: 1, transition: { staggerChildren: 0.08 } }
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 16 },
+  show: { opacity: 1, y: 0, transition: { type: 'spring', stiffness: 300, damping: 24 } }
+};
 
 const DistributorsList = () => {
   const [distributors, setDistributors] = useState([]);
@@ -77,13 +85,13 @@ const DistributorsList = () => {
       {/* Header Area */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-white tracking-tight">Suppliers & Distributors</h1>
-          <p className="text-sm text-ag-text-dim mt-1">Manage your inventory suppliers and track outstanding debt.</p>
+          <h1 className="text-2xl font-bold text-om-text tracking-tight">Suppliers & Distributors</h1>
+          <p className="text-sm text-om-text-secondary mt-1">Manage your inventory suppliers and track outstanding debt.</p>
         </div>
         <div className="flex items-center gap-3 w-full sm:w-auto">
           <button
             onClick={() => navigate('/inventory/receive')}
-            className="flex-1 sm:flex-none flex items-center justify-center gap-2 px-6 py-2.5 bg-white/10 text-white rounded-lg font-medium hover:bg-white/15 transition-all text-sm border border-white/20"
+            className="flex-1 sm:flex-none flex items-center justify-center gap-2 px-6 py-2.5 bg-om-border text-om-text rounded-lg font-medium hover:bg-ag-bg-card transition-all text-sm border border-ag-border"
           >
             <HiOutlineCheckCircle className="w-5 h-5" /> Receive Stock
           </button>
@@ -97,77 +105,73 @@ const DistributorsList = () => {
       </div>
 
       {/* Summary KPI */}
-      <motion.div variants={itemVariants} className="glass-card p-6 flex items-center justify-between border-red-500/20 bg-gradient-to-r from-red-500/5 to-transparent">
+      <motion.div variants={itemVariants} className="glass-card bg-om-card border border-om-border p-6 flex items-center justify-between border-red-500/20 bg-gradient-to-r from-red-500/5 to-transparent">
         <div>
           <p className="text-xs font-semibold text-red-400 uppercase tracking-widest flex items-center gap-2">
             <HiOutlineShieldExclamation className="w-4 h-4" /> Total Outstanding Debt
           </p>
-          <h2 className="text-3xl font-bold text-white mt-2">₹{totalDebt.toLocaleString('en-IN')}</h2>
+          <h2 className="text-3xl font-bold text-om-text mt-2">₹{totalDebt.toLocaleString('en-IN')}</h2>
         </div>
       </motion.div>
 
       {/* Tabs & Search */}
       <motion.div variants={itemVariants} className="flex flex-col sm:flex-row items-center justify-between gap-4">
-        <div className="flex p-1 bg-white/[0.03] rounded-xl border border-white/5 w-full sm:w-auto">
+        <div className="flex p-1 bg-om-surface rounded-xl border border-om-border w-full sm:w-auto">
           {['ALL', 'MOBILE_SUPPLIER', 'SPARE_PART_SUPPLIER', 'BOTH'].map((type) => (
             <button
               key={type}
               onClick={() => setActiveTab(type)}
               className={`px-4 py-2 text-xs font-bold uppercase tracking-wider rounded-lg transition-all ${
                 activeTab === type 
-                  ? 'bg-white/10 text-white shadow-lg' 
-                  : 'text-ag-text-dim hover:text-white'
+                  ? 'bg-om-border text-om-text shadow-lg' 
+                  : 'text-om-text-secondary hover:text-om-text'
               }`}
             >
               {type === 'ALL' ? 'All' : type.split('_')[0]}
             </button>
           ))}
         </div>
-        <div className="relative w-full sm:w-72">
-          <HiOutlineSearch className="absolute left-3 top-1/2 -translate-y-1/2 text-ag-text-dim w-5 h-5" />
-          <input
-            type="text"
-            placeholder="Search suppliers..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full ag-input h-10 pl-10 text-xs"
-          />
-        </div>
+        <SearchBar 
+          value={searchTerm} 
+          onChange={setSearchTerm} 
+          placeholder="Search suppliers by name or phone..."
+          className="flex-1"
+        />
       </motion.div>
 
       {/* Table */}
-      <motion.div variants={itemVariants} className="glass-card overflow-hidden flex flex-col min-h-[500px]">
+      <motion.div variants={itemVariants} className="glass-card bg-om-card border border-om-border overflow-hidden flex flex-col min-h-[500px]">
         <div className="flex-1 overflow-x-auto">
           {loading ? (
             <div className="flex items-center justify-center h-64">
               <div className="w-8 h-8 border-2 border-ag-primary border-t-transparent rounded-full animate-spin" />
             </div>
           ) : filteredDistributors.length === 0 ? (
-            <div className="flex flex-col items-center justify-center h-64 text-ag-text-dim">
-              <HiOutlineUserGroup className="w-12 h-12 mb-4 opacity-20 text-white" />
+            <div className="flex flex-col items-center justify-center h-64 text-om-text-secondary">
+              <HiOutlineUserGroup className="w-12 h-12 mb-4 opacity-20 text-om-text" />
               <p>No suppliers found matching your filter.</p>
             </div>
           ) : (
             <table className="w-full text-left border-collapse">
               <thead>
-                <tr className="border-b border-white/10 bg-white/[0.02]">
-                  <th className="py-4 px-6 text-xs font-semibold text-ag-text-muted uppercase tracking-wider">Supplier Profile</th>
-                  <th className="py-4 px-6 text-xs font-semibold text-ag-text-muted uppercase tracking-wider hidden sm:table-cell">Type</th>
-                  <th className="py-4 px-6 text-xs font-semibold text-ag-text-muted uppercase tracking-wider text-right">Outstanding</th>
-                  <th className="py-4 px-6 text-xs font-semibold text-ag-text-muted uppercase tracking-wider text-right">Actions</th>
+                <tr className="border-b border-om-border bg-om-surface">
+                  <th className="py-4 px-6 text-xs font-semibold text-om-text-muted uppercase tracking-wider">Supplier Profile</th>
+                  <th className="py-4 px-6 text-xs font-semibold text-om-text-muted uppercase tracking-wider hidden sm:table-cell">Type</th>
+                  <th className="py-4 px-6 text-xs font-semibold text-om-text-muted uppercase tracking-wider text-right">Outstanding</th>
+                  <th className="py-4 px-6 text-xs font-semibold text-om-text-muted uppercase tracking-wider text-right">Actions</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-white/5">
                 {filteredDistributors.map((dist) => (
-                  <tr key={dist.id} className="hover:bg-white/[0.02] transition-colors group">
+                  <tr key={dist.id} className="hover:bg-om-surface transition-colors group">
                     <td className="py-4 px-6">
                       <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-ag-text">
+                        <div className="w-10 h-10 rounded-full bg-om-surface flex items-center justify-center text-om-text">
                           <HiOutlineUserGroup className="w-5 h-5" />
                         </div>
                         <div>
-                          <p className="font-medium text-white group-hover:text-ag-primary transition-colors">{dist.name}</p>
-                          <p className="text-xs text-ag-text-dim">{dist.phone}</p>
+                          <p className="font-medium text-om-text group-hover:text-ag-primary transition-colors">{dist.name}</p>
+                          <p className="text-xs text-om-text-secondary">{dist.phone}</p>
                         </div>
                       </div>
                     </td>
@@ -190,7 +194,7 @@ const DistributorsList = () => {
                     <td className="py-4 px-6 text-right">
                       <button
                         onClick={() => navigate(`/suppliers/${dist.id}/ledger`)}
-                        className="text-[10px] font-bold text-ag-primary hover:text-white transition-colors bg-ag-primary/10 hover:bg-ag-primary/20 px-3 py-1.5 rounded-lg border border-ag-primary/20 uppercase"
+                        className="text-[10px] font-bold text-ag-primary hover:text-om-text transition-colors bg-ag-primary/10 hover:bg-ag-primary/20 px-3 py-1.5 rounded-lg border border-ag-primary/20 uppercase"
                       >
                         View Ledger
                       </button>
@@ -208,12 +212,12 @@ const DistributorsList = () => {
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }}
-            className="glass-card w-full max-w-md p-6 border border-white/10 shadow-2xl relative"
+            className="glass-card bg-om-card border border-om-border w-full max-w-md p-6 border border-om-border shadow-2xl relative"
           >
-            <h2 className="text-xl font-bold text-white mb-6">Add New Supplier</h2>
+            <h2 className="text-xl font-bold text-om-text mb-6">Add New Supplier</h2>
             <form onSubmit={handleAddSubmit} className="space-y-4">
               <div>
-                <label className="block text-xs font-medium text-ag-text-muted mb-1 ml-1 uppercase tracking-wider">Distributor/Company Name</label>
+                <label className="block text-xs font-medium text-om-text-muted mb-1 ml-1 uppercase tracking-wider">Distributor/Company Name</label>
                 <input
                   type="text" required
                   value={newDistributor.name}
@@ -224,7 +228,7 @@ const DistributorsList = () => {
               </div>
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-xs font-medium text-ag-text-muted mb-1 ml-1 uppercase tracking-wider">Phone</label>
+                  <label className="block text-xs font-medium text-om-text-muted mb-1 ml-1 uppercase tracking-wider">Phone</label>
                   <input
                     type="tel" required
                     value={newDistributor.phone}
@@ -233,11 +237,11 @@ const DistributorsList = () => {
                   />
                 </div>
                 <div>
-                  <label className="block text-xs font-medium text-ag-text-muted mb-1 ml-1 uppercase tracking-wider">Type</label>
+                  <label className="block text-xs font-medium text-om-text-muted mb-1 ml-1 uppercase tracking-wider">Type</label>
                   <select
                     value={newDistributor.type}
                     onChange={(e) => setNewDistributor({...newDistributor, type: e.target.value})}
-                    className="ag-input appearance-none bg-black/40"
+                    className="ag-input appearance-none bg-om-surface"
                   >
                     <option value="MOBILE_SUPPLIER">Mobile Phones</option>
                     <option value="SPARE_PART_SUPPLIER">Spare Parts</option>
@@ -246,7 +250,7 @@ const DistributorsList = () => {
                 </div>
               </div>
               <div>
-                <label className="block text-xs font-medium text-ag-text-muted mb-1 ml-1 uppercase tracking-wider">Email (Optional)</label>
+                <label className="block text-xs font-medium text-om-text-muted mb-1 ml-1 uppercase tracking-wider">Email (Optional)</label>
                 <input
                   type="email"
                   value={newDistributor.email}
@@ -258,7 +262,7 @@ const DistributorsList = () => {
                 <button
                   type="button"
                   onClick={() => setIsAddModalOpen(false)}
-                  className="px-5 py-2.5 text-sm font-medium text-white hover:bg-white/10 rounded-lg transition-colors border border-white/5"
+                  className="px-5 py-2.5 text-sm font-medium text-om-text hover:bg-om-border rounded-lg transition-colors border border-om-border"
                 >
                   Cancel
                 </button>

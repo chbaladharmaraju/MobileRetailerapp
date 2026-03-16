@@ -73,12 +73,12 @@ const DistributorLedger = () => {
         <div className="flex items-center gap-4">
           <button
             onClick={() => navigate('/suppliers')}
-            className="p-2.5 bg-white/5 border border-white/10 rounded-xl hover:bg-white/10 transition-colors"
+            className="p-2.5 bg-ag-bg-card border border-ag-border rounded-xl hover:bg-ag-bg-card transition-colors"
           >
-            <HiOutlineArrowLeft className="w-5 h-5 text-white" />
+            <HiOutlineArrowLeft className="w-5 h-5 text-ag-text" />
           </button>
           <div>
-            <h1 className="text-2xl font-bold text-white tracking-tight">{distributor.name}</h1>
+            <h1 className="text-2xl font-bold text-ag-text tracking-tight">{distributor.name}</h1>
             <p className="text-sm text-ag-text-dim mt-1">{distributor.phone}</p>
           </div>
         </div>
@@ -96,26 +96,26 @@ const DistributorLedger = () => {
         <div className="space-y-6">
           <motion.div variants={itemVariants} className="glass-card p-6 border-red-500/20 bg-gradient-to-br from-red-500/5 to-transparent">
             <p className="text-xs font-semibold text-red-400 uppercase tracking-widest">To Pay (Credit Balance)</p>
-            <h2 className="text-4xl font-bold text-white mt-2 tracking-tight">
+            <h2 className="text-4xl font-bold text-ag-text mt-2 tracking-tight">
               ₹{parseFloat(distributor.balanceOwed).toLocaleString('en-IN')}
             </h2>
             <p className="text-xs text-ag-text-dim mt-2">Total outstanding debt to this supplier</p>
           </motion.div>
 
-          <motion.div variants={itemVariants} className="glass-card p-6 border border-white/5">
-            <h3 className="text-sm font-semibold text-white mb-4 uppercase tracking-wider">Supplier Profile</h3>
+          <motion.div variants={itemVariants} className="glass-card p-6 border border-ag-border">
+            <h3 className="text-sm font-semibold text-ag-text mb-4 uppercase tracking-wider">Supplier Profile</h3>
             <div className="space-y-4">
               <div>
                 <p className="text-[11px] text-ag-text-dim uppercase tracking-wider mb-1">Total Purchases</p>
-                <p className="text-sm font-medium text-white">{distributor.purchases.length} Shipments Processed</p>
+                <p className="text-sm font-medium text-ag-text">{distributor.purchases.length} Shipments Processed</p>
               </div>
               <div>
                 <p className="text-[11px] text-ag-text-dim uppercase tracking-wider mb-1">Email</p>
-                <p className="text-sm font-medium text-white">{distributor.email || 'N/A'}</p>
+                <p className="text-sm font-medium text-ag-text">{distributor.email || 'N/A'}</p>
               </div>
               <div>
                 <p className="text-[11px] text-ag-text-dim uppercase tracking-wider mb-1">Address</p>
-                <p className="text-sm font-medium text-white">{distributor.address || 'N/A'}</p>
+                <p className="text-sm font-medium text-ag-text">{distributor.address || 'N/A'}</p>
               </div>
             </div>
           </motion.div>
@@ -123,25 +123,25 @@ const DistributorLedger = () => {
 
         {/* Right Column: Transaction History */}
         <motion.div variants={itemVariants} className="glass-card lg:col-span-2 overflow-hidden flex flex-col min-h-[500px]">
-          <div className="p-4 border-b border-white/5 bg-white/[0.02]">
-            <h3 className="font-semibold text-white tracking-wide">Ledger History</h3>
+          <div className="p-4 border-b border-ag-border bg-white/[0.02]">
+            <h3 className="font-semibold text-ag-text tracking-wide">Ledger History</h3>
           </div>
           
           <div className="flex-1 overflow-y-auto max-h-[600px] p-4 space-y-3 scrollbar-thin scrollbar-thumb-white/10">
             {distributor.transactions.length === 0 ? (
               <div className="flex flex-col items-center justify-center h-48 opacity-50">
-                <HiOutlineDocumentText className="w-12 h-12 text-white mb-3" />
-                <p className="text-sm text-white font-medium">No transactions recorded yet.</p>
+                <HiOutlineDocumentText className="w-12 h-12 text-ag-text mb-3" />
+                <p className="text-sm text-ag-text font-medium">No transactions recorded yet.</p>
               </div>
             ) : (
               distributor.transactions.map((tx) => (
-                <div key={tx.id} className="p-4 rounded-xl bg-white/[0.03] border border-white/5 flex items-center justify-between hover:bg-white/[0.05] transition-colors">
+                <div key={tx.id} className="p-4 rounded-xl bg-white/[0.03] border border-ag-border flex items-center justify-between hover:bg-white/[0.05] transition-colors">
                   <div className="flex items-center gap-4">
                     <div className={`p-2.5 rounded-full ${tx.type === 'CREDIT' ? 'bg-red-500/10 text-red-400' : 'bg-green-500/10 text-green-400'}`}>
                       {tx.type === 'CREDIT' ? <HiOutlineDocumentText className="w-5 h-5" /> : <HiOutlineCurrencyRupee className="w-5 h-5" />}
                     </div>
                     <div>
-                      <p className="text-sm font-medium text-white">
+                      <p className="text-sm font-medium text-ag-text">
                         {tx.type === 'CREDIT' ? 'Stock Intake (Purchased)' : 'Payment Sent'}
                       </p>
                       <p className="text-xs text-ag-text-dim mt-0.5">{tx.description}</p>
@@ -173,9 +173,9 @@ const DistributorLedger = () => {
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
           <motion.div
             initial={{ opacity: 0, scale: 0.95, y: 10 }} animate={{ opacity: 1, scale: 1, y: 0 }}
-            className="glass-card w-full max-w-md p-6 border border-white/10 shadow-2xl relative"
+            className="glass-card w-full max-w-md p-6 border border-ag-border shadow-2xl relative"
           >
-            <h2 className="text-xl font-bold text-white mb-2">Record Payment</h2>
+            <h2 className="text-xl font-bold text-ag-text mb-2">Record Payment</h2>
             <p className="text-sm text-ag-text-dim mb-6">Log money sent to settle your debt with this supplier.</p>
             
             <form onSubmit={handlePaymentSubmit} className="space-y-5">
@@ -183,14 +183,14 @@ const DistributorLedger = () => {
                 <label className="block text-xs font-semibold text-ag-text-muted mb-2 uppercase tracking-wider">Payment Amount (₹)</label>
                 <div className="relative">
                   <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                    <span className="text-white sm:text-lg">₹</span>
+                    <span className="text-ag-text sm:text-lg">₹</span>
                   </div>
                   <input
                     type="number" required min="1" step="0.01"
                     value={paymentAmount}
                     onChange={(e) => setPaymentAmount(e.target.value)}
                     max={parseFloat(distributor.balanceOwed)}
-                    className="w-full bg-white/[0.03] border border-white/10 rounded-xl pl-8 pr-4 py-3 text-white placeholder-ag-text-dim focus:border-ag-primary outline-none transition-all font-medium"
+                    className="w-full bg-white/[0.03] border border-ag-border rounded-xl pl-8 pr-4 py-3 text-ag-text placeholder-ag-text-dim focus:border-ag-primary outline-none transition-all font-medium"
                     placeholder="0.00"
                   />
                 </div>
@@ -207,7 +207,7 @@ const DistributorLedger = () => {
                   type="text"
                   value={paymentDesc}
                   onChange={(e) => setPaymentDesc(e.target.value)}
-                  className="w-full bg-white/[0.03] border border-white/10 rounded-xl px-4 py-3 text-sm text-white placeholder-ag-text-dim focus:border-ag-primary outline-none transition-all"
+                  className="w-full bg-white/[0.03] border border-ag-border rounded-xl px-4 py-3 text-sm text-ag-text placeholder-ag-text-dim focus:border-ag-primary outline-none transition-all"
                   placeholder="e.g. Bank Transfer Ref #1234"
                 />
               </div>
@@ -216,7 +216,7 @@ const DistributorLedger = () => {
                 <button
                   type="button"
                   onClick={() => setIsPaymentModalOpen(false)}
-                  className="px-5 py-2.5 text-sm font-semibold text-white bg-white/5 hover:bg-white/10 rounded-lg transition-colors border border-white/10"
+                  className="px-5 py-2.5 text-sm font-semibold text-ag-text bg-ag-bg-card hover:bg-ag-bg-card rounded-lg transition-colors border border-ag-border"
                 >
                   Cancel
                 </button>

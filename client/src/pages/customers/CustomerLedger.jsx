@@ -13,6 +13,11 @@ const CustomerLedger = () => {
   const [showPaymentModal, setShowPaymentModal] = useState(false);
   const [paymentForm, setPaymentForm] = useState({ amount: '', paymentMode: 'cash', notes: '' });
 
+  // Calculate totals from transactions
+  const totalCredit = transactions.filter(t => t.type === 'CREDIT').reduce((acc, t) => acc + parseFloat(t.amount), 0);
+  const totalPaid = transactions.filter(t => t.type === 'PAYMENT').reduce((acc, t) => acc + parseFloat(t.amount), 0);
+
+
   const fetchLedger = async () => {
     try {
       const { data } = await api.get(`/credit/${id}`);
@@ -53,7 +58,7 @@ const CustomerLedger = () => {
 
   if (loading) return (
     <div className="flex items-center justify-center min-h-screen">
-      <div className="w-8 h-8 border-2 border-white/20 border-t-white rounded-full animate-spin" />
+      <div className="w-8 h-8 border-2 border-ag-border border-t-white rounded-full animate-spin" />
     </div>
   );
 
@@ -61,23 +66,35 @@ const CustomerLedger = () => {
     <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="pb-10">
       
       <div className="flex items-center gap-4 mb-6">
-        <Link to="/customers" className="p-2 rounded-lg bg-white/5 hover:bg-white/10 text-white transition-colors">
+        <Link to="/customers" className="p-2 rounded-lg bg-ag-bg-card hover:bg-ag-bg-card text-ag-text transition-colors">
           <HiOutlineArrowLeft className="w-5 h-5" />
         </Link>
         <div>
-          <h1 className="text-xl font-semibold text-white tracking-tight">{customer?.name}</h1>
+          <h1 className="text-xl font-semibold text-ag-text tracking-tight">{customer?.name}</h1>
           <p className="text-sm text-ag-text-muted">{customer?.phone}</p>
         </div>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-        <div className="glass-card p-6 border border-white/5 md:col-span-2 flex flex-col justify-center">
-          <p className="text-sm font-medium text-ag-text-muted tracking-widest uppercase mb-2">Outstanding Credit</p>
-          <div className="flex items-end gap-4">
-            <h2 className={`text-4xl font-bold tracking-tight ${parseFloat(customer?.creditBalance) > 0 ? 'text-red-400' : 'text-green-400'}`}>
-              {formatCurrency(customer?.creditBalance || 0)}
-            </h2>
-            <p className="text-sm text-ag-text-dim mb-1 border-l border-white/10 pl-4">Account Balance</p>
+        <div className="glass-card p-6 border border-ag-border md:col-span-2 flex flex-col justify-center">
+          <p className="text-sm font-medium text-ag-text-muted tracking-widest uppercase mb-6 flex items-center gap-2">
+            Party Balance Summary
+          </p>
+          <div className="grid grid-cols-3 gap-4">
+            <div>
+              <p className="text-[10px] font-bold tracking-widest uppercase text-ag-text-dim mb-1">Total Credit Given</p>
+              <h3 className="text-2xl font-bold tracking-tight text-ag-text">{formatCurrency(totalCredit)}</h3>
+            </div>
+            <div className="border-l border-ag-border pl-6">
+              <p className="text-[10px] font-bold tracking-widest uppercase text-ag-text-dim mb-1">Total Paid to Us</p>
+              <h3 className="text-2xl font-bold tracking-tight text-green-400">{formatCurrency(totalPaid)}</h3>
+            </div>
+            <div className="border-l border-ag-border pl-6 rounded-r-xl bg-gradient-to-r from-white/[0.02] to-transparent">
+              <p className="text-[10px] font-bold tracking-widest uppercase text-ag-text-dim mb-1">Current Due</p>
+              <h2 className={`text-4xl font-bold tracking-tight ${parseFloat(customer?.creditBalance) > 0 ? 'text-red-400' : 'text-ag-text'}`}>
+                {formatCurrency(customer?.creditBalance || 0)}
+              </h2>
+            </div>
           </div>
         </div>
         
@@ -94,11 +111,11 @@ const CustomerLedger = () => {
       </div>
 
       <div className="glass-card overflow-hidden">
-        <div className="p-5 border-b border-white/5 bg-black/20 flex justify-between items-center">
-          <h3 className="text-sm font-semibold text-white tracking-wide flex items-center gap-2">
+        <div className="p-5 border-b border-ag-border bg-black/20 flex justify-between items-center">
+          <h3 className="text-sm font-semibold text-ag-text tracking-wide flex items-center gap-2">
              <HiOutlineDocumentText className="w-4 h-4" /> Transaction History
           </h3>
-          <span className="text-xs font-medium text-ag-text-muted px-2.5 py-1 bg-white/5 rounded-full">{transactions.length} records</span>
+          <span className="text-xs font-medium text-ag-text-muted px-2.5 py-1 bg-ag-bg-card rounded-full">{transactions.length} records</span>
         </div>
         
         <div className="overflow-x-auto">
@@ -152,10 +169,10 @@ const CustomerLedger = () => {
           >
             <motion.div
               initial={{ scale: 0.95, y: 20 }} animate={{ scale: 1, y: 0 }} exit={{ scale: 0.95, y: 20 }}
-              className="bg-[#0a0a0a] border border-white/10 rounded-2xl p-6 w-full max-w-md shadow-2xl relative overflow-hidden"
+              className="bg-[#0a0a0a] border border-ag-border rounded-2xl p-6 w-full max-w-md shadow-2xl relative overflow-hidden"
             >
               <div className="absolute top-0 inset-x-0 h-1 bg-gradient-to-r from-transparent via-white/20 to-transparent" />
-              <h3 className="text-lg font-semibold text-white mb-6">Receive Credit Payment</h3>
+              <h3 className="text-lg font-semibold text-ag-text mb-6">Receive Credit Payment</h3>
               
               <form onSubmit={handlePaymentSubmit} className="space-y-4">
                 <div>
@@ -199,7 +216,7 @@ const CustomerLedger = () => {
                 </div>
 
                 <div className="flex gap-3 pt-4">
-                  <button type="button" onClick={() => setShowPaymentModal(false)} className="ag-btn bg-white/5 hover:bg-white/10 text-white flex-1 border border-white/5">
+                  <button type="button" onClick={() => setShowPaymentModal(false)} className="ag-btn bg-ag-bg-card hover:bg-ag-bg-card text-ag-text flex-1 border border-ag-border">
                     Cancel
                   </button>
                   <button type="submit" className="ag-btn ag-btn-primary flex-1">

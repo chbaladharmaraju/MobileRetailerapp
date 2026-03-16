@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { HiOutlineBell, HiOutlineSearch, HiOutlineMenu, HiOutlineSun, HiOutlineMoon } from 'react-icons/hi';
+import { HiOutlineBell, HiOutlineSearch, HiOutlineMenu, HiOutlineSun, HiOutlineMoon, HiOutlineCog } from 'react-icons/hi';
 import { useTheme } from '../../context/ThemeContext';
 import api from '../../services/api';
 
@@ -56,11 +56,20 @@ const Topbar = ({ sidebarOpen, setSidebarOpen }) => {
       <div className="flex items-center justify-between gap-3 py-4 px-4 sm:px-6"
         style={{ borderBottom: '1px solid var(--om-border)' }}
       >
-        {/* Left: Menu Toggle & Title */}
+        {/* Left: Logo & Title */}
         <div className="flex items-center gap-3 flex-1 min-w-0">
+          {/* Mobile: Branded Header */}
+          <div className="md:hidden flex items-center gap-2.5 flex-1 min-w-0">
+            <div className="w-10 h-10 flex items-center justify-center shrink-0 overflow-hidden">
+              <img src="https://res.cloudinary.com/dogxrczp3/image/upload/v1773350425/logo_2_qlc6y5.png" alt="Orange Mobile Logo" className="w-full h-full object-contain" />
+            </div>
+            <h1 className="text-[15px] font-bold truncate" style={{ color: 'var(--om-text)' }}>Orange Mobile Retail App</h1>
+          </div>
+
+          {/* Desktop: Page Title */}
           <button
             onClick={() => setSidebarOpen(!sidebarOpen)}
-            className="md:hidden flex items-center justify-center w-10 h-10 rounded-xl transition-all shrink-0 active:scale-95"
+            className="hidden md:hidden flex items-center justify-center w-10 h-10 rounded-xl transition-all shrink-0 active:scale-95"
             style={{
               background: 'var(--om-glass)',
               backdropFilter: 'blur(12px)',
@@ -77,15 +86,89 @@ const Topbar = ({ sidebarOpen, setSidebarOpen }) => {
               {new Date().toLocaleDateString('en-IN', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}
             </p>
           </div>
-
-          <div className="md:hidden flex-1 min-w-0">
-            <h1 className="text-base font-bold truncate" style={{ color: 'var(--om-text)' }}>{title}</h1>
-          </div>
         </div>
 
-        {/* Right: Search + Theme Toggle + Alerts */}
+        {/* Right: Actions */}
         <div className="flex items-center gap-2 shrink-0">
 
+          {/* === Mobile Right Icons === */}
+          <div className="md:hidden flex items-center gap-1.5">
+            {/* Bell */}
+            <div className="relative">
+              <button
+                onClick={() => setShowAlerts(!showAlerts)}
+                className="relative flex items-center justify-center w-10 h-10 rounded-full transition-all active:scale-95"
+                style={{ color: 'var(--om-text-secondary)' }}
+              >
+                <HiOutlineBell className="w-5 h-5" />
+                {alerts.length > 0 && (
+                  <span className="absolute top-2 right-2 w-2 h-2 rounded-full" style={{ backgroundColor: 'var(--om-red)' }} />
+                )}
+              </button>
+
+              {/* Mobile Alert Dropdown */}
+              <AnimatePresence>
+                {showAlerts && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 10, scale: 0.95 }}
+                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                    exit={{ opacity: 0, y: 10, scale: 0.95 }}
+                    transition={{ duration: 0.2 }}
+                    className="absolute right-0 top-[calc(100%+8px)] w-72 glass-card p-4 z-50 shadow-2xl border border-ag-border"
+                    style={{ backgroundColor: 'var(--om-card)' }}
+                  >
+                    <div className="flex items-center justify-between mb-3 px-1">
+                      <h3 className="text-[13px] font-bold" style={{ color: 'var(--om-text)' }}>Notifications</h3>
+                      <span className="text-[9px] font-bold tracking-wider uppercase px-2 py-0.5 rounded-full" style={{ backgroundColor: 'var(--om-accent-glow)', color: 'var(--om-accent)' }}>
+                        {alerts.length} New
+                      </span>
+                    </div>
+
+                    {alerts.length === 0 ? (
+                      <div className="flex flex-col items-center justify-center py-6">
+                        <HiOutlineBell className="w-7 h-7 mb-2" style={{ color: 'var(--om-text-muted)' }} />
+                        <p className="text-[13px] font-medium" style={{ color: 'var(--om-text-secondary)' }}>All caught up!</p>
+                      </div>
+                    ) : (
+                      <div className="space-y-1.5 max-h-[250px] overflow-y-auto pr-1">
+                        {alerts.slice(0, 5).map((alert, index) => (
+                          <motion.div
+                            initial={{ opacity: 0, x: -8 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: index * 0.05 }}
+                            key={alert.id}
+                            className="p-2.5 rounded-lg cursor-pointer transition-colors"
+                            style={{ backgroundColor: 'var(--om-surface)' }}
+                          >
+                            <div className="flex gap-2">
+                              <div className="mt-1 w-1.5 h-1.5 rounded-full shrink-0" style={{ backgroundColor: 'var(--om-red)' }} />
+                              <div>
+                                <p className="text-[12px] leading-relaxed" style={{ color: 'var(--om-text)' }}>{alert.message}</p>
+                                <p className="text-[10px] mt-1 font-medium" style={{ color: 'var(--om-text-muted)' }}>
+                                  {new Date(alert.createdAt).toLocaleString('en-IN', {
+                                    hour: '2-digit', minute: '2-digit', day: 'numeric', month: 'short'
+                                  })}
+                                </p>
+                              </div>
+                            </div>
+                          </motion.div>
+                        ))}
+                      </div>
+                    )}
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
+            {/* Settings / Theme Toggle */}
+            <button
+              onClick={toggleTheme}
+              className="flex items-center justify-center w-10 h-10 rounded-full transition-all active:scale-95"
+              style={{ color: 'var(--om-text-secondary)' }}
+              title={theme === 'dark' ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
+            >
+              {theme === 'dark' ? <HiOutlineSun className="w-5 h-5" /> : <HiOutlineMoon className="w-5 h-5" />}
+            </button>
+          </div>
+
+          {/* === Desktop Right Icons === */}
           {/* Search Bar (desktop only) */}
           <div className={`relative hidden lg:flex items-center transition-all duration-400 ${searchFocused ? 'w-[320px]' : 'w-48'}`}>
             <div
@@ -109,10 +192,10 @@ const Topbar = ({ sidebarOpen, setSidebarOpen }) => {
             </div>
           </div>
 
-          {/* Theme Toggle */}
+          {/* Theme Toggle (desktop only) */}
           <button
             onClick={toggleTheme}
-            className="flex items-center justify-center w-10 h-10 rounded-xl transition-all duration-300 active:scale-95"
+            className="hidden md:flex items-center justify-center w-10 h-10 rounded-xl transition-all duration-300 active:scale-95"
             style={{
               background: 'var(--om-glass)',
               backdropFilter: 'blur(12px)',
@@ -124,8 +207,8 @@ const Topbar = ({ sidebarOpen, setSidebarOpen }) => {
             {theme === 'dark' ? <HiOutlineSun className="w-5 h-5" /> : <HiOutlineMoon className="w-5 h-5" />}
           </button>
 
-          {/* Alerts Bell */}
-          <div className="relative">
+          {/* Alerts Bell (desktop only) */}
+          <div className="relative hidden md:block">
             <button
               onClick={() => setShowAlerts(!showAlerts)}
               className="relative flex items-center justify-center w-10 h-10 rounded-xl transition-all"

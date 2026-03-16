@@ -68,7 +68,8 @@ const ReceiveStock = () => {
     // Check if it's an existing item or a new one
     if (typeof selectedItemData === 'string') {
         const sourceItem = (itemType === 'PRODUCT' ? products : spareParts).find(p => p.id === selectedItemData);
-        if (!sourceItem) return;
+        if (!sourceItem) return toast.error('Could not find selected item data in database');
+        
         itemToAdd = {
             id: sourceItem.id,
             name: sourceItem.name,
@@ -146,11 +147,11 @@ const ReceiveStock = () => {
     <motion.div initial="hidden" animate="show" variants={containerVariants} className="max-w-5xl mx-auto space-y-6">
       
       <div className="flex items-center gap-4">
-        <button onClick={() => navigate('/inventory')} className="p-2.5 bg-white/5 border border-white/10 rounded-xl hover:bg-white/10 transition-colors">
-          <HiOutlineArrowLeft className="w-5 h-5 text-white" />
+        <button onClick={() => navigate('/inventory')} className="p-2.5 bg-ag-bg-card border border-ag-border rounded-xl hover:bg-ag-bg-input transition-colors">
+          <HiOutlineArrowLeft className="w-5 h-5 text-ag-text-base" />
         </button>
         <div>
-          <h1 className="text-2xl font-bold text-white tracking-tight">Receive Stock</h1>
+          <h1 className="text-2xl font-bold text-ag-text-title tracking-tight">Receive Stock</h1>
           <p className="text-sm text-ag-text-dim mt-1">Log incoming inventory from a distributor.</p>
         </div>
       </div>
@@ -158,8 +159,8 @@ const ReceiveStock = () => {
       <form onSubmit={handleSubmit} className="space-y-6">
         
         {/* Step 1: Distributor Info */}
-        <motion.div variants={itemVariants} className="glass-card p-6 border border-white/5">
-          <h2 className="text-lg font-semibold text-white mb-6 flex items-center gap-2">
+        <motion.div variants={itemVariants} className="glass-card p-6 border border-ag-border">
+          <h2 className="text-lg font-semibold text-ag-text-title mb-6 flex items-center gap-2">
             <HiOutlineUserGroup className="w-5 h-5 text-ag-primary" /> 1. Supplier Source
           </h2>
           
@@ -183,29 +184,29 @@ const ReceiveStock = () => {
         </motion.div>
 
         {/* Step 2: Items List */}
-        <motion.div variants={itemVariants} className="glass-card p-6 border border-white/5">
+        <motion.div variants={itemVariants} className="glass-card p-6 border border-ag-border">
           <div className="flex items-center justify-between mb-6">
-            <h2 className="text-lg font-semibold text-white flex items-center gap-2">
+            <h2 className="text-lg font-semibold text-ag-text-title flex items-center gap-2">
               <HiOutlineCube className="w-5 h-5 text-ag-primary" /> 2. Items Received
             </h2>
             <button
               type="button"
               onClick={() => setIsItemModalOpen(true)}
-              className="flex items-center gap-2 px-4 py-2 bg-white/10 text-white rounded-lg text-sm font-medium hover:bg-white/20 transition-all border border-white/10"
+              className="flex items-center gap-2 px-4 py-2 bg-ag-bg-input text-ag-text-base rounded-lg text-sm font-medium hover:bg-ag-border transition-all border border-ag-border"
             >
               <HiOutlinePlus className="w-4 h-4" /> Add Item
             </button>
           </div>
 
           {items.length === 0 ? (
-            <div className="flex flex-col items-center justify-center h-32 border-2 border-dashed border-white/10 rounded-xl bg-white/[0.01]">
+            <div className="flex flex-col items-center justify-center h-32 border-2 border-dashed border-ag-border rounded-xl bg-ag-bg-input">
               <p className="text-sm font-medium text-ag-text-dim">No items added to this delivery yet.</p>
             </div>
           ) : (
             <div className="overflow-x-auto">
               <table className="w-full text-left border-collapse">
                 <thead>
-                  <tr className="border-b border-white/10 bg-white/[0.02]">
+                  <tr className="border-b border-ag-border bg-white/[0.02]">
                     <th className="py-3 px-4 text-xs font-semibold text-ag-text-muted uppercase tracking-wider">Item Name</th>
                     <th className="py-3 px-4 text-xs font-semibold text-ag-text-muted uppercase tracking-wider">Type</th>
                     <th className="py-3 px-4 text-xs font-semibold text-ag-text-muted uppercase tracking-wider text-right">Qty</th>
@@ -214,27 +215,27 @@ const ReceiveStock = () => {
                     <th className="py-3 px-4"></th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-white/5">
+                <tbody className="divide-y divide-ag-border">
                   {items.map((item, index) => (
-                    <tr key={index} className="hover:bg-white/[0.01]">
-                      <td className="py-3 px-4 text-sm font-medium text-white">{item.name}</td>
+                    <tr key={index} className="hover:bg-ag-bg-input transition-colors">
+                      <td className="py-3 px-4 text-sm font-medium text-ag-text-base">{item.name}</td>
                       <td className="py-3 px-4 text-xs">
-                        <span className={`px-2 py-1 rounded-md border ${item.itemType === 'PRODUCT' ? 'bg-purple-500/10 border-purple-500/20 text-purple-400' : 'bg-blue-500/10 border-blue-500/20 text-blue-400'}`}>
+                        <span className={`px-2 py-1 rounded-md border ${item.itemType === 'PRODUCT' ? 'bg-purple-500/10 border-purple-500/20 text-purple-600 dark:text-purple-400' : 'bg-blue-500/10 border-blue-500/20 text-blue-600 dark:text-blue-400'}`}>
                           {item.itemType === 'PRODUCT' ? 'New Phone' : 'Spare Part'}
                         </span>
                       </td>
-                      <td className="py-3 px-4 text-sm text-right font-medium text-white">{item.quantity}</td>
-                      <td className="py-3 px-4 text-sm text-right font-medium text-white">₹{item.unitCost.toLocaleString('en-IN')}</td>
-                      <td className="py-3 px-4 text-sm text-right font-semibold text-white">₹{item.totalRowCost.toLocaleString('en-IN')}</td>
+                      <td className="py-3 px-4 text-sm text-right font-medium text-ag-text-base">{item.quantity}</td>
+                      <td className="py-3 px-4 text-sm text-right font-medium text-ag-text-base">₹{item.unitCost.toLocaleString('en-IN')}</td>
+                      <td className="py-3 px-4 text-sm text-right font-semibold text-ag-text-base">₹{item.totalRowCost.toLocaleString('en-IN')}</td>
                       <td className="py-3 px-4 text-right">
-                        <button type="button" onClick={() => removeItem(index)} className="p-1.5 text-ag-text-dim hover:text-red-400 hover:bg-red-500/10 rounded-md transition-colors">
+                        <button type="button" onClick={() => removeItem(index)} className="p-1.5 text-ag-text-dim hover:text-red-500 hover:bg-red-500/10 rounded-md transition-colors">
                           <HiOutlineTrash className="w-4 h-4" />
                         </button>
                       </td>
                     </tr>
                   ))}
-                  <tr className="bg-white/[0.02]">
-                    <td colSpan="4" className="py-4 px-4 text-sm font-semibold text-white text-right">Grand Total:</td>
+                  <tr className="bg-ag-bg-input">
+                    <td colSpan="4" className="py-4 px-4 text-sm font-semibold text-ag-text-base text-right">Grand Total:</td>
                     <td className="py-4 px-4 text-lg font-bold text-ag-primary text-right">₹{totalPurchaseCost.toLocaleString('en-IN')}</td>
                     <td></td>
                   </tr>
@@ -245,8 +246,8 @@ const ReceiveStock = () => {
         </motion.div>
 
         {/* Step 3: Payment Tracking */}
-        <motion.div variants={itemVariants} className="glass-card p-6 border border-white/5">
-          <h2 className="text-lg font-semibold text-white mb-6">3. Payment & Ledger</h2>
+        <motion.div variants={itemVariants} className="glass-card p-6 border border-ag-border">
+          <h2 className="text-lg font-semibold text-ag-text-title mb-6">3. Payment & Ledger</h2>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
@@ -257,7 +258,7 @@ const ReceiveStock = () => {
                   setPaymentStatus(e.target.value);
                   if (e.target.value !== 'PARTIAL') setAmountPaid('');
                 }}
-                className="w-full bg-white/[0.03] border border-white/10 rounded-xl px-4 py-3 text-sm font-medium text-white focus:border-ag-primary transition-all [&>option]:bg-[#111] [&>option]:text-white"
+                className="w-full bg-ag-bg-input border border-ag-border rounded-xl px-4 py-3 text-sm font-medium text-ag-text-base focus:border-ag-primary transition-all [&>option]:bg-ag-bg-card [&>option]:text-ag-text-base"
               >
                 <option value="PAID">Paid in Full (Cash/Transfer)</option>
                 <option value="PARTIAL">Partially Paid</option>
@@ -277,7 +278,7 @@ const ReceiveStock = () => {
                   type="number" required min="1" step="0.01" max={totalPurchaseCost - 1}
                   value={amountPaid}
                   onChange={(e) => setAmountPaid(e.target.value)}
-                  className="w-full bg-white/[0.03] border border-white/10 rounded-xl px-4 py-3 text-white placeholder-ag-text-dim focus:border-ag-primary transition-all font-medium"
+                  className="w-full bg-ag-bg-input border border-ag-border rounded-xl px-4 py-3 text-ag-text-base placeholder-ag-text-dim focus:border-ag-primary transition-all font-medium"
                   placeholder="0.00"
                 />
                  <p className="text-[11px] text-red-400 font-medium mt-2 tracking-wide">
@@ -292,7 +293,7 @@ const ReceiveStock = () => {
                 type="text"
                 value={notes}
                 onChange={(e) => setNotes(e.target.value)}
-                className="w-full bg-white/[0.03] border border-white/10 rounded-xl px-4 py-3 text-sm text-white placeholder-ag-text-dim focus:border-ag-primary transition-all"
+                className="w-full bg-ag-bg-input border border-ag-border rounded-xl px-4 py-3 text-sm text-ag-text-base placeholder-ag-text-dim focus:border-ag-primary transition-all"
                 placeholder="e.g. Received via BlueDart tracking #9182312"
               />
             </div>
@@ -304,7 +305,7 @@ const ReceiveStock = () => {
             <button
               type="button"
               onClick={() => navigate('/inventory')}
-              className="px-6 py-3 text-sm font-semibold text-white bg-white/5 hover:bg-white/10 rounded-xl border border-white/10 transition-colors"
+              className="px-6 py-3 text-sm font-semibold text-ag-text-base bg-ag-bg-input hover:bg-ag-border rounded-xl border border-ag-border transition-colors"
             >
               Cancel
             </button>
@@ -322,25 +323,25 @@ const ReceiveStock = () => {
       {/* Add Item Modal */}
       <AnimatePresence>
         {isItemModalOpen && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 dark:bg-black/80 backdrop-blur-sm">
             <motion.div
               initial={{ opacity: 0, scale: 0.95, y: 10 }} animate={{ opacity: 1, scale: 1, y: 0 }} exit={{ opacity: 0, scale: 0.95 }}
-              className="glass-card w-full max-w-md p-6 border border-white/10 shadow-2xl relative"
+              className="glass-card w-full max-w-md p-6 border border-ag-border shadow-2xl relative"
             >
-              <h2 className="text-xl font-bold text-white mb-6">Add Item to Delivery</h2>
+              <h2 className="text-xl font-bold text-ag-text-title mb-6">Add Item to Delivery</h2>
               
               <div className="space-y-4">
                 {/* Toggle Type */}
-                <div className="flex p-1 bg-black/40 border border-white/10 rounded-lg">
+                <div className="flex p-1 bg-ag-bg-input border border-ag-border rounded-lg">
                   <button
                     onClick={() => setItemType('PRODUCT')}
-                    className={`flex-1 py-2 text-sm font-medium rounded-md transition-all ${itemType === 'PRODUCT' ? 'bg-white text-black' : 'text-ag-text-muted hover:text-white'}`}
+                    className={`flex-1 py-2 text-sm font-medium rounded-md transition-all ${itemType === 'PRODUCT' ? 'bg-ag-bg-card shadow-sm text-ag-text-base' : 'text-ag-text-muted hover:text-ag-text-title'}`}
                   >
                     New Phones
                   </button>
                   <button
                     onClick={() => setItemType('SPARE_PART')}
-                    className={`flex-1 py-2 text-sm font-medium rounded-md transition-all ${itemType === 'SPARE_PART' ? 'bg-white text-black' : 'text-ag-text-muted hover:text-white'}`}
+                    className={`flex-1 py-2 text-sm font-medium rounded-md transition-all ${itemType === 'SPARE_PART' ? 'bg-ag-bg-card shadow-sm text-ag-text-base' : 'text-ag-text-muted hover:text-ag-text-title'}`}
                   >
                     Spare Parts
                   </button>
@@ -363,7 +364,7 @@ const ReceiveStock = () => {
                       type="number" min="1"
                       value={itemQuantity}
                       onChange={(e) => setItemQuantity(e.target.value)}
-                      className="w-full bg-white/[0.03] border border-white/10 rounded-xl px-4 py-3 text-white focus:border-ag-primary transition-all"
+                      className="w-full bg-ag-bg-input border border-ag-border rounded-xl px-4 py-3 text-ag-text-base focus:border-ag-primary transition-all"
                     />
                   </div>
                   <div>
@@ -372,7 +373,7 @@ const ReceiveStock = () => {
                       type="number" min="0" step="0.01"
                       value={itemCost}
                       onChange={(e) => setItemCost(e.target.value)}
-                      className="w-full bg-white/[0.03] border border-white/10 rounded-xl px-4 py-3 text-white focus:border-ag-primary transition-all"
+                      className="w-full bg-ag-bg-input border border-ag-border rounded-xl px-4 py-3 text-ag-text-base focus:border-ag-primary transition-all"
                     />
                   </div>
                 </div>
@@ -380,13 +381,13 @@ const ReceiveStock = () => {
                 <div className="pt-4 flex gap-3 justify-end">
                   <button
                     onClick={() => setIsItemModalOpen(false)}
-                    className="px-5 py-2.5 text-sm font-semibold text-white bg-white/5 hover:bg-white/10 rounded-lg transition-colors border border-white/10"
+                    className="px-5 py-2.5 text-sm font-semibold text-ag-text-base bg-ag-bg-input hover:bg-ag-border rounded-lg transition-colors border border-ag-border"
                   >
                     Cancel
                   </button>
                   <button
                     onClick={addItemToList}
-                    disabled={!selectedItemId || !itemCost}
+                    disabled={!selectedItemData || !itemCost}
                     className="px-5 py-2.5 text-sm font-semibold bg-ag-primary text-black rounded-lg hover:bg-ag-primary/90 transition-colors disabled:opacity-50"
                   >
                     Add to List

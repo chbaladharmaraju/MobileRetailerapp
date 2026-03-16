@@ -45,6 +45,10 @@ import CustomerLedger from './pages/customers/CustomerLedger';
 import DistributorsList from './pages/suppliers/DistributorsList';
 import DistributorLedger from './pages/suppliers/DistributorLedger';
 import ReceiveStock from './pages/inventory/ReceiveStock';
+import AllTransactions from './pages/transactions/AllTransactions';
+
+import SecondHandDetails from './pages/secondhand/SecondHandDetails';
+import DistributorPayments from './pages/suppliers/DistributorPayments';
 
 // Protected Route
 const ProtectedRoute = ({ children }) => {
@@ -87,7 +91,7 @@ function App() {
         />
         <Routes>
           {/* Public Landing + Auth */}
-          <Route path="/" element={<PublicRoute><Landing /></PublicRoute>} />
+          <Route path="/" element={<PublicRoute><Navigate to="/login" replace /></PublicRoute>} />
           <Route element={<PublicRoute><AuthLayout /></PublicRoute>}>
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
@@ -96,12 +100,13 @@ function App() {
           {/* Protected App Routes */}
           <Route element={<ProtectedRoute><DashboardLayout /></ProtectedRoute>}>
             <Route path="/app" element={<Dashboard />} />
+            <Route path="/app/analytics" element={<Dashboard />} />
             <Route path="/sales" element={<SalesList />} />
             <Route path="/sales/new" element={<NewSale />} />
             <Route path="/sales/:id" element={<SaleDetails />} />
             <Route path="/secondhand" element={<SecondHandList />} />
             <Route path="/secondhand/intake" element={<IntakeForm />} />
-            <Route path="/secondhand/resale/:id" element={<ResaleForm />} />
+            <Route path="/secondhand/details/:id" element={<SecondHandDetails />} />
             <Route path="/repairs" element={<RepairsList />} />
             <Route path="/repairs/new" element={<RepairIntake />} />
             <Route path="/repairs/:id" element={<RepairDetails />} />
@@ -113,6 +118,8 @@ function App() {
             <Route path="/customers/:id/ledger" element={<CustomerLedger />} />
             <Route path="/suppliers" element={<DistributorsList />} />
             <Route path="/suppliers/:id/ledger" element={<DistributorLedger />} />
+            <Route path="/payments/daily" element={<DistributorPayments />} />
+            <Route path="/app/transactions" element={<AllTransactions />} />
           </Route>
 
           {/* Catch all */}
