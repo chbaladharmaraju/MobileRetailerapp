@@ -139,9 +139,10 @@ const recordInventoryPurchase = async (req, res) => {
             const created = await tx.sparePart.create({
               data: {
                 name: item.name,
+                category: 'General', // Added default category to fix crash
                 costPrice: parseFloat(item.unitCost),
-                sellingPrice: parseFloat(item.unitCost) * 1.5, // Default markup
-                stock: 0, // Will be incremented below
+                sellingPrice: parseFloat(item.unitCost) * 1.5,
+                stock: 0,
                 distributorId: activeDistributorId
               }
             });
@@ -237,8 +238,10 @@ const recordInventoryPurchase = async (req, res) => {
 
     res.status(201).json(result);
   } catch (error) {
-    console.error('Failed to log inventory purchase:', error);
-    res.status(500).json({ error: 'Failed to record stock intake' });
+    console.error('--- STOCK INTAKE FAILURE ---');
+    console.error('Error Details:', error.message);
+    if (error.stack) console.error('Stack:', error.stack);
+    res.status(500).json({ error: 'Failed to record stock intake', details: error.message });
   }
 };
 
