@@ -125,6 +125,32 @@ const createResale = async (req, res, next) => {
         data: { isSold: true },
       });
 
+      // Handle Credit for Second Hand Sale
+      if (paymentMode === 'credit') {
+        let buyer = await tx.customer.findUnique({ where: { phone: buyerPhone } });
+        if (!buyer) {
+          buyer = await tx.customer.create({
+            data: { name: buyerName, phone: buyerPhone }
+          });
+        }
+
+        await tx.customer.update({
+          where: { id: buyer.id },
+          data: { creditBalance: { increment: parseFloat(sellingPrice) } }
+        });
+
+        await tx.creditTransaction.create({
+          data: {
+            customerId: buyer.id,
+            amount: parseFloat(sellingPrice),
+            type: 'CREDIT',
+            description: `Second-Hand Resale: ${intake.brand} ${intake.model}`,
+            referenceId: newSale.id,
+            userId: req.user.id,
+          }
+        });
+      }
+
       return newSale;
     });
 

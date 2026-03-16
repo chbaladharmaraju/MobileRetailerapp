@@ -47,7 +47,7 @@ const getAllTransactions = async (req, res, next) => {
         customerName: s.customer?.name || 'Walk-in',
         date: s.createdAt,
         title: `Phone Sale: ${s.invoiceNumber || s.id.slice(0, 8)}`,
-        status: 'PAID'
+        status: s.paymentMode === 'credit' ? 'CREDIT' : 'PAID'
       })),
       ...repairs.map(r => ({
         id: r.id,
@@ -74,7 +74,7 @@ const getAllTransactions = async (req, res, next) => {
         customerName: ss.buyerName || 'Walk-in',
         date: ss.createdAt,
         title: `Second Hand Sale: ${ss.intake?.brand} ${ss.intake?.model}`,
-        status: 'SOLD'
+        status: ss.paymentMode === 'credit' ? 'CREDIT' : 'SOLD'
       })),
       ...supplierPayments.map(p => ({
         id: p.id,
