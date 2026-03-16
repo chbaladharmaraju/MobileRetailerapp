@@ -38,44 +38,6 @@ async function seed() {
   });
   console.log('✅ Admin user created:', admin.email);
 
-  // Create one Customer
-  console.log('👥 Creating one customer...');
-  await prisma.customer.create({
-    data: { 
-      name: 'Balu Test', 
-      phone: '9876543210', 
-      email: 'balu.test@example.com', 
-      address: 'Shop 1, Main Street' 
-    },
-  });
-
-  // Create one Product
-  console.log('📱 Creating one product...');
-  await prisma.product.create({
-    data: {
-      name: 'iPhone 15 Pro',
-      brand: 'Apple',
-      model: 'A3106',
-      costPrice: 95000,
-      sellingPrice: 120000,
-      stock: 5,
-      minStock: 2,
-      specs: { ram: '8GB', storage: '128GB', color: 'Black' },
-    },
-  });
-
-  // Create one Spare Part
-  console.log('🔧 Creating one spare part...');
-  await prisma.sparePart.create({
-    data: { 
-      name: 'iPhone 15 Screen', 
-      category: 'screen', 
-      costPrice: 8500, 
-      stock: 2, 
-      minStock: 1 
-    } 
-  });
-
   console.log('\n🎉 Fresh seeding complete!\n');
   console.log('Login credentials:');
   console.log('  Admin: admin@orange.com / admin123\n');
