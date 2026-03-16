@@ -80,10 +80,17 @@ const NewSale = () => {
             <h1 className="text-[17px] font-bold" style={{ color: 'var(--om-text)' }}>Sale</h1>
           </div>
           <div className="flex items-center gap-2">
-            <div className="flex rounded-full overflow-hidden" style={{ border: '1px solid var(--om-border)' }}>
-              <button type="button" onClick={() => setPaymentMode('credit')} className="px-4 py-1.5 text-[12px] font-bold transition-all" style={{ backgroundColor: paymentMode === 'credit' ? '#3B82F6' : 'transparent', color: paymentMode === 'credit' ? '#fff' : 'var(--om-text-secondary)' }}>Credit</button>
-              <button type="button" onClick={() => setPaymentMode('cash')} className="px-4 py-1.5 text-[12px] font-bold transition-all" style={{ backgroundColor: paymentMode === 'cash' ? '#3B82F6' : 'transparent', color: paymentMode === 'cash' ? '#fff' : 'var(--om-text-secondary)' }}>Cash</button>
-            </div>
+            <select 
+              value={paymentMode} 
+              onChange={(e) => setPaymentMode(e.target.value)}
+              className="px-3 py-1.5 text-[12px] font-bold rounded-full bg-ag-bg-input border border-ag-border outline-none transition-all focus:border-ag-primary ring-ag-primary/10"
+              style={{ color: 'var(--om-text)' }}
+            >
+              <option value="cash">Cash</option>
+              <option value="card">Card</option>
+              <option value="upi">UPI</option>
+              <option value="credit">Credit</option>
+            </select>
             <button type="button" className="w-9 h-9 flex items-center justify-center rounded-full" style={{ color: 'var(--om-text-muted)' }}>
               <HiOutlineCog className="w-5 h-5" />
             </button>

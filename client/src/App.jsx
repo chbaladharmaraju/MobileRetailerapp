@@ -106,6 +106,7 @@ function App() {
             <Route path="/sales/:id" element={<SaleDetails />} />
             <Route path="/secondhand" element={<SecondHandList />} />
             <Route path="/secondhand/intake" element={<IntakeForm />} />
+            <Route path="/secondhand/resale/:id" element={<ResaleForm />} />
             <Route path="/secondhand/details/:id" element={<SecondHandDetails />} />
             <Route path="/repairs" element={<RepairsList />} />
             <Route path="/repairs/new" element={<RepairIntake />} />
