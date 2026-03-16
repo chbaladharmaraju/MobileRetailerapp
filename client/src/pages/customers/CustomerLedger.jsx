@@ -12,6 +12,7 @@ const CustomerLedger = () => {
   const [loading, setLoading] = useState(true);
   const [showPaymentModal, setShowPaymentModal] = useState(false);
   const [paymentForm, setPaymentForm] = useState({ amount: '', paymentMode: 'cash', notes: '' });
+  const [searchTerm, setSearchTerm] = useState('');
 
   // Calculate totals from transactions
   const totalCredit = transactions.filter(t => t.type === 'CREDIT').reduce((acc, t) => acc + parseFloat(t.amount), 0);
@@ -111,11 +112,22 @@ const CustomerLedger = () => {
       </div>
 
       <div className="glass-card overflow-hidden">
-        <div className="p-5 border-b border-ag-border bg-black/20 flex justify-between items-center">
-          <h3 className="text-sm font-semibold text-ag-text tracking-wide flex items-center gap-2">
-             <HiOutlineDocumentText className="w-4 h-4" /> Transaction History
-          </h3>
-          <span className="text-xs font-medium text-ag-text-muted px-2.5 py-1 bg-ag-bg-card rounded-full">{transactions.length} records</span>
+        <div className="p-5 border-b border-ag-border bg-black/20 flex flex-col sm:flex-row justify-between items-center gap-4">
+          <div className="flex items-center gap-4">
+            <h3 className="text-sm font-semibold text-ag-text tracking-wide flex items-center gap-2">
+               <HiOutlineDocumentText className="w-4 h-4" /> Transaction History
+            </h3>
+            <span className="text-xs font-medium text-ag-text-muted px-2.5 py-1 bg-ag-bg-card rounded-full">{transactions.length} records</span>
+          </div>
+          <div className="relative w-full sm:w-64">
+            <input 
+              type="text" 
+              placeholder="Search transactions..." 
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="w-full bg-ag-bg-card border border-ag-border rounded-lg px-3 py-1.5 text-xs text-ag-text focus:border-ag-primary outline-none transition-all"
+            />
+          </div>
         </div>
         
         <div className="overflow-x-auto">
@@ -129,12 +141,20 @@ const CustomerLedger = () => {
               </tr>
             </thead>
             <tbody>
-              {transactions.length === 0 ? (
+              {transactions.filter(tx => 
+                tx.description?.toLowerCase().includes(searchTerm.toLowerCase()) || 
+                tx.type?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                tx.amount?.toString().includes(searchTerm)
+              ).length === 0 ? (
                 <tr>
-                  <td colSpan="4" className="text-center py-12 text-ag-text-dim text-sm italic">No credit transactions found</td>
+                  <td colSpan="4" className="text-center py-12 text-ag-text-dim text-sm italic">No transactions found matching your search</td>
                 </tr>
               ) : (
-                transactions.map((tx) => (
+                transactions.filter(tx => 
+                  tx.description?.toLowerCase().includes(searchTerm.toLowerCase()) || 
+                  tx.type?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                  tx.amount?.toString().includes(searchTerm)
+                ).map((tx) => (
                   <tr key={tx.id} className="hover:bg-white/[0.02] transition-colors">
                     <td className="text-sm text-ag-text-muted whitespace-nowrap">
                       {new Date(tx.createdAt).toLocaleString('en-IN', {

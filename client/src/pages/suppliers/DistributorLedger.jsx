@@ -19,6 +19,7 @@ const DistributorLedger = () => {
   const [paymentAmount, setPaymentAmount] = useState('');
   const [paymentDesc, setPaymentDesc] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [searchTerm, setSearchTerm] = useState('');
 
   useEffect(() => {
     fetchDistributorDetails();
@@ -123,18 +124,35 @@ const DistributorLedger = () => {
 
         {/* Right Column: Transaction History */}
         <motion.div variants={itemVariants} className="glass-card lg:col-span-2 overflow-hidden flex flex-col min-h-[500px]">
-          <div className="p-4 border-b border-ag-border bg-white/[0.02]">
+          <div className="p-4 border-b border-ag-border bg-white/[0.02] flex flex-col sm:flex-row justify-between items-center gap-4">
             <h3 className="font-semibold text-ag-text tracking-wide">Ledger History</h3>
+            <div className="relative w-full sm:w-64">
+              <input 
+                type="text" 
+                placeholder="Search history..." 
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="w-full bg-white/[0.03] border border-ag-border rounded-lg px-3 py-1.5 text-xs text-ag-text focus:border-ag-primary outline-none transition-all"
+              />
+            </div>
           </div>
           
           <div className="flex-1 overflow-y-auto max-h-[600px] p-4 space-y-3 scrollbar-thin scrollbar-thumb-white/10">
-            {distributor.transactions.length === 0 ? (
+            {distributor.transactions.filter(tx => 
+              tx.description?.toLowerCase().includes(searchTerm.toLowerCase()) || 
+              tx.type?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+              tx.amount?.toString().includes(searchTerm)
+            ).length === 0 ? (
               <div className="flex flex-col items-center justify-center h-48 opacity-50">
                 <HiOutlineDocumentText className="w-12 h-12 text-ag-text mb-3" />
                 <p className="text-sm text-ag-text font-medium">No transactions recorded yet.</p>
               </div>
             ) : (
-              distributor.transactions.map((tx) => (
+              distributor.transactions.filter(tx => 
+                tx.description?.toLowerCase().includes(searchTerm.toLowerCase()) || 
+                tx.type?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                tx.amount?.toString().includes(searchTerm)
+              ).map((tx) => (
                 <div key={tx.id} className="p-4 rounded-xl bg-white/[0.03] border border-ag-border flex items-center justify-between hover:bg-white/[0.05] transition-colors">
                   <div className="flex items-center gap-4">
                     <div className={`p-2.5 rounded-full ${tx.type === 'CREDIT' ? 'bg-red-500/10 text-red-400' : 'bg-green-500/10 text-green-400'}`}>
