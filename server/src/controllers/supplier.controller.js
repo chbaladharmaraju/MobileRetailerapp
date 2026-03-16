@@ -284,10 +284,41 @@ const recordPaymentToDistributor = async (req, res) => {
   }
 };
 
+const getDailyPaymentsBreakdown = async (req, res) => {
+  try {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    const payments = await prisma.distributorTransaction.findMany({
+      where: {
+        type: 'PAYMENT',
+        createdAt: { gte: today }
+      },
+      include: {
+        distributor: {
+          select: { name: true, phone: true }
+        },
+        user: {
+          select: { name: true }
+        }
+      },
+      orderBy: { createdAt: 'desc' }
+    });
+
+    res.json(payments);
+  } catch (error) {
+    console.error('--- DAILY PAYMENTS FETCH ERROR ---');
+    console.error('Error Details:', error.message);
+    console.error('Stack:', error.stack);
+    res.status(500).json({ error: 'Failed to fetch daily payments', details: error.message });
+  }
+};
+
 module.exports = {
   getDistributors,
   getDistributorById,
   createDistributor,
   recordInventoryPurchase,
-  recordPaymentToDistributor
+  recordPaymentToDistributor,
+  getDailyPaymentsBreakdown
 };

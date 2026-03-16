@@ -49,6 +49,7 @@ const getAnalytics = async (req, res, next) => {
       creditAgg,
       distributorDuesAgg,
       allRepairsCount,
+      todayPaymentsAgg,
     ] = await Promise.all([
       // New phone sale items (profit, cost, quantity)
       prisma.saleItem.aggregate({
@@ -105,6 +106,14 @@ const getAnalytics = async (req, res, next) => {
       }),
       // All repairs count in period (any status)
       prisma.repair.count({ where: filterWithUser }),
+      // Today's payments to suppliers
+      prisma.distributorTransaction.aggregate({
+        where: { 
+          type: 'PAYMENT', 
+          createdAt: { gte: new Date(new Date().setHours(0,0,0,0)) } 
+        },
+        _sum: { amount: true }
+      }),
     ]);
 
     const newSalesRevenue = parseFloat(salesAgg._sum.totalAmount || 0);
@@ -152,6 +161,7 @@ const getAnalytics = async (req, res, next) => {
         outstandingCredit,
         supplierDues: parseFloat(distributorDuesAgg._sum.balanceOwed || 0),
         totalRepairsInPeriod: allRepairsCount,
+        todayPayment: parseFloat(todayPaymentsAgg._sum.amount || 0),
       },
       inventory: {
         totalProductsInStock: parseInt(productsAgg._sum.stock || 0, 10),

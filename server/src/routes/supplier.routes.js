@@ -6,7 +6,8 @@ const {
   getDistributorById,
   createDistributor,
   recordInventoryPurchase,
-  recordPaymentToDistributor
+  recordPaymentToDistributor,
+  getDailyPaymentsBreakdown
 } = require('../controllers/supplier.controller');
 
 const router = express.Router();
@@ -15,6 +16,7 @@ router.use(auth); // Require login for all supplier routes
 const requireAuthRoles = roleGuard('ADMIN', 'STAFF');
 
 router.get('/', requireAuthRoles, getDistributors);
+router.get('/payments/daily', requireAuthRoles, getDailyPaymentsBreakdown);
 router.get('/:id', requireAuthRoles, getDistributorById);
 router.post('/', requireAuthRoles, createDistributor);
 router.post('/intake', requireAuthRoles, recordInventoryPurchase);

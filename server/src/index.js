@@ -16,8 +16,10 @@ const invoiceRoutes = require('./routes/invoice.routes');
 const analyticsRoutes = require('./routes/analytics.routes');
 const creditRoutes = require('./routes/credit.routes');
 const supplierRoutes = require('./routes/supplier.routes');
+const transactionRoutes = require('./routes/transaction.routes');
 const uploadRoutes = require('./routes/upload.routes');
 
+// API Routes
 const app = express();
 const PORT = process.env.PORT || 5000;
 
@@ -68,6 +70,7 @@ app.use('/api/analytics', analyticsRoutes);
 app.use('/api/credit', creditRoutes);
 app.use('/api/suppliers', supplierRoutes);
 app.use('/api/distributors', supplierRoutes); // Alias for compatibility
+app.use('/api/transactions', transactionRoutes);
 app.use('/api/uploads', uploadRoutes);
 
 // Error handler (must be last)
