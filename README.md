@@ -1,4 +1,4 @@
-# 🚀 Digital Sales & Retail Platform
+# Digital Sales & Retail Platform
 
 A full-stack web application designed to streamline **customer onboarding, transaction management, and sales analytics** for retail businesses.
 This project focuses on improving **user experience, reducing friction in workflows, and enabling data-driven decision-making**.
