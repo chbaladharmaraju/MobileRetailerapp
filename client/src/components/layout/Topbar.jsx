@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { HiOutlineBell, HiOutlineSearch, HiOutlineMenu, HiOutlineSun, HiOutlineMoon, HiOutlineCog } from 'react-icons/hi';
 import { useTheme } from '../../context/ThemeContext';
 import api from '../../services/api';
+import Logo from '../common/Logo';
 
 const Topbar = ({ sidebarOpen, setSidebarOpen }) => {
   const [alerts, setAlerts] = useState([]);
@@ -60,10 +61,10 @@ const Topbar = ({ sidebarOpen, setSidebarOpen }) => {
         <div className="flex items-center gap-3 flex-1 min-w-0">
           {/* Mobile: Branded Header */}
           <div className="md:hidden flex items-center gap-2.5 flex-1 min-w-0">
-            <div className="w-10 h-10 flex items-center justify-center shrink-0 overflow-hidden">
-              <img src="https://res.cloudinary.com/dogxrczp3/image/upload/v1773350425/logo_2_qlc6y5.png" alt="Orange Mobile Logo" className="w-full h-full object-contain" />
+            <div className="w-8 h-8 flex items-center justify-center shrink-0">
+              <Logo className="w-full h-full" />
             </div>
-            <h1 className="text-[15px] font-bold truncate" style={{ color: 'var(--om-text)' }}>Orange Mobile Retail App</h1>
+            <h1 className="text-[15px] font-bold truncate" style={{ color: 'var(--om-text)' }}>Orange Digital Sales & Retail Platform</h1>
           </div>
 
           {/* Desktop: Page Title */}

@@ -1,3 +1,8 @@
+import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import { motion } from 'framer-motion';
+import { HiOutlineUserGroup } from 'react-icons/hi';
+import api from '../../services/api';
 import SearchBar from '../../components/common/SearchBar';
 
 const CustomersList = () => {

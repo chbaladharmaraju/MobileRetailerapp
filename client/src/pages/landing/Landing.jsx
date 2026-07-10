@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { HiOutlinePhone, HiOutlineReceiptRefund, HiOutlineCash, HiOutlineChartBar, HiOutlineArrowRight, HiOutlineCheck } from 'react-icons/hi';
 import ParticleBackground from '../../components/common/ParticleBackground';
+import Logo from '../../components/common/Logo';
 
 const featureCards = [
   {
@@ -65,12 +66,12 @@ const Landing = () => {
       {/* ─── Header ─── */}
       <header className="relative z-10 flex items-center justify-between px-5 sm:px-8 lg:px-14 pt-6 sm:pt-8">
         <div className="flex items-center gap-3">
-          <div className="w-12 h-10 sm:w-16 sm:h-12 rounded-xl flex items-center justify-center p-1 overflow-hidden">
-            <img src="https://res.cloudinary.com/dogxrczp3/image/upload/v1773350425/logo_2_qlc6y5.png" alt="Orange Mobile Logo" className="w-full h-full object-contain" />
+          <div className="w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center shrink-0">
+            <Logo className="w-full h-full" />
           </div>
           <div className="hidden sm:block">
-            <p className="text-xs font-bold tracking-[0.32em] text-orange-400 uppercase">Orange Mobile Retail</p>
-            <p className="text-[11px] text-slate-500 mt-0.5 tracking-wide">Next-Gen Retail OS</p>
+            <p className="text-xs font-bold tracking-[0.15em] text-orange-400 uppercase">Orange Retail Platform</p>
+            <p className="text-[11px] text-slate-500 mt-0.5 tracking-wide">Digital Sales & Analytics</p>
           </div>
         </div>
 
@@ -116,8 +117,8 @@ const Landing = () => {
               transition={{ delay: 0.15, duration: 0.6, ease: [0.25, 0.8, 0.25, 1] }}
               className="flex justify-center mb-8"
             >
-              <div className="w-24 h-20 sm:w-32 sm:h-24 flex items-center justify-center p-2 overflow-hidden">
-                <img src="https://res.cloudinary.com/dogxrczp3/image/upload/v1773350425/logo_2_qlc6y5.png" alt="Orange Mobile Logo" className="w-full h-full object-contain" />
+              <div className="w-20 h-20 sm:w-24 sm:h-24 flex items-center justify-center">
+                <Logo className="w-full h-full" />
               </div>
             </motion.div>
 
@@ -137,7 +138,7 @@ const Landing = () => {
               transition={{ delay: 0.4, duration: 0.6 }}
               className="mt-8 text-sm sm:text-lg text-slate-400 max-w-2xl mx-auto leading-relaxed font-medium"
             >
-              Experience the future of shop management. Orange Mobile Retail simplifies sales, repairs,
+              Experience the future of shop management. Orange Digital Sales & Retail Platform simplifies sales, repairs,
               and finance into one intuitive and powerful ecosystem.
             </motion.p>
 
@@ -160,7 +161,7 @@ const Landing = () => {
                 className="w-full sm:w-auto inline-flex items-center justify-center px-12 py-5 rounded-lg text-sm sm:text-base font-semibold text-slate-300 border border-ag-border hover:border-orange-500/40 hover:bg-orange-500/[0.04] transition-all duration-500 ease-in-out"
                 style={{ backdropFilter: 'blur(12px)' }}
               >
-                Already using Orange Mobile Retail?
+                Already using Orange Digital Sales & Retail Platform?
               </Link>
             </motion.div>
           </motion.div>
@@ -218,9 +219,9 @@ const Landing = () => {
                 <motion.div 
                   animate={{ y: [0, -10, 0] }}
                   transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-                  className="w-28 h-24 sm:w-36 sm:h-28 flex items-center justify-center p-3 mb-6 overflow-hidden"
+                  className="w-20 h-20 sm:w-24 sm:h-24 flex items-center justify-center mb-6"
                 >
-                  <img src="https://res.cloudinary.com/dogxrczp3/image/upload/v1773350425/logo_2_qlc6y5.png" alt="Orange Mobile Logo" className="w-full h-full object-contain" />
+                  <Logo className="w-full h-full" />
                 </motion.div>
                 <p className="text-sm font-bold text-ag-text tracking-[0.4em] uppercase opacity-90">Verified Secure</p>
               </div>
@@ -247,7 +248,7 @@ const Landing = () => {
               How the app was
             </p>
             <h3 className="text-xl sm:text-2xl font-bold text-ag-text mb-6 leading-relaxed">
-              Experience absolute precision in inventory, sales, and analytics with Orange Mobile Retail’s premium management ecosystem.
+              Experience absolute precision in inventory, sales, and analytics with Orange Digital Sales & Retail Platform's premium management ecosystem.
             </h3>
             <div className="flex justify-center gap-2">
               {[1, 2, 3].map((i) => (
@@ -319,8 +320,8 @@ const Landing = () => {
 
       {/* ─── Footer ─── */}
       <footer className="relative z-10 px-5 sm:px-8 py-6 text-center border-t border-white/[0.06]">
-        <p className="text-[12px] text-slate-500 tracking-[0.4em] uppercase font-bold">
-          Orange Mobile Retail • Premium Shop OS
+        <p className="text-[12px] text-slate-500 tracking-[0.3em] uppercase font-bold">
+          Orange Digital Sales & Retail Platform • Premium Shop OS
         </p>
       </footer>
     </div>

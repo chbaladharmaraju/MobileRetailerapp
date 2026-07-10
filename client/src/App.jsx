@@ -14,6 +14,7 @@ import Signup from './pages/auth/Signup';
 // Dashboard / Landing
 import Dashboard from './pages/dashboard/Dashboard';
 import Landing from './pages/landing/Landing';
+import NotFound from './pages/NotFound';
 
 // Sales
 import SalesList from './pages/sales/SalesList';
@@ -55,8 +56,8 @@ const ProtectedRoute = ({ children }) => {
   const { user, loading } = useAuth();
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="w-10 h-10 border-3 border-ag-neon/30 border-t-ag-neon rounded-full animate-spin" />
+      <div className="min-h-screen flex items-center justify-center" style={{ backgroundColor: '#0B0F14' }}>
+        <div className="w-10 h-10 border-3 border-orange-500/20 border-t-orange-500 rounded-full animate-spin" />
       </div>
     );
   }
@@ -66,7 +67,13 @@ const ProtectedRoute = ({ children }) => {
 // Public Route (redirect if logged in)
 const PublicRoute = ({ children }) => {
   const { user, loading } = useAuth();
-  if (loading) return null;
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center" style={{ backgroundColor: '#0B0F14' }}>
+        <div className="w-10 h-10 border-3 border-orange-500/20 border-t-orange-500 rounded-full animate-spin" />
+      </div>
+    );
+  }
   return user ? <Navigate to="/app" replace /> : children;
 };
 
@@ -101,6 +108,7 @@ function App() {
           <Route element={<ProtectedRoute><DashboardLayout /></ProtectedRoute>}>
             <Route path="/app" element={<Dashboard />} />
             <Route path="/app/analytics" element={<Dashboard />} />
+            <Route path="/analytics" element={<Dashboard />} />
             <Route path="/sales" element={<SalesList />} />
             <Route path="/sales/new" element={<NewSale />} />
             <Route path="/sales/:id" element={<SaleDetails />} />
@@ -124,7 +132,7 @@ function App() {
           </Route>
 
           {/* Catch all */}
-          <Route path="*" element={<Navigate to="/" replace />} />
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
     </AuthProvider>

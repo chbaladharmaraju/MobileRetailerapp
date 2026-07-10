@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useAuth } from '../../context/AuthContext';
+import Logo from '../common/Logo';
 import {
   HiOutlineViewGrid,
   HiOutlineShoppingCart,
@@ -60,12 +61,12 @@ const Sidebar = ({ open, setOpen }) => {
       >
         {/* Logo */}
         <div className="flex items-center gap-3 p-6 pt-7">
-          <div className="w-16 h-10 flex items-center justify-center shrink-0 overflow-hidden">
-            <img src="https://res.cloudinary.com/dogxrczp3/image/upload/v1773350425/logo_2_qlc6y5.png" alt="Orange Mobile Logo" className="w-full h-full object-contain" />
+          <div className="w-10 h-10 flex items-center justify-center shrink-0">
+            <Logo className="w-full h-full" />
           </div>
           <div className="min-w-0">
-            <h1 className="text-sm font-bold tracking-wide truncate" style={{ color: 'var(--om-text)' }}>Orange Mobile</h1>
-            <p className="text-[10px] uppercase tracking-widest font-medium mt-0.5" style={{ color: 'var(--om-text-muted)' }}>Retail OS</p>
+            <h1 className="text-sm font-bold tracking-wide truncate" style={{ color: 'var(--om-text)' }}>Orange Retail</h1>
+            <p className="text-[10px] uppercase tracking-widest font-medium mt-0.5" style={{ color: 'var(--om-text-muted)' }}>Digital Sales & Analytics</p>
           </div>
         </div>
 
@@ -98,10 +99,10 @@ const Sidebar = ({ open, setOpen }) => {
             {/* Close Button */}
             <div className="flex items-center justify-between p-5" style={{ borderBottom: '1px solid var(--om-border)' }}>
               <div className="flex items-center gap-3 min-w-0">
-                <div className="w-12 h-8 flex items-center justify-center shrink-0 overflow-hidden">
-                  <img src="https://res.cloudinary.com/dogxrczp3/image/upload/v1773350425/logo_2_qlc6y5.png" alt="Orange Mobile Logo" className="w-full h-full object-contain" />
+                <div className="w-10 h-10 flex items-center justify-center shrink-0">
+                  <Logo className="w-full h-full" />
                 </div>
-                <h1 className="text-sm font-bold tracking-wide truncate" style={{ color: 'var(--om-text)' }}>Orange Mobile</h1>
+                <h1 className="text-sm font-bold tracking-wide truncate" style={{ color: 'var(--om-text)' }}>Orange Retail</h1>
               </div>
               <button
                 onClick={() => setOpen(false)}
