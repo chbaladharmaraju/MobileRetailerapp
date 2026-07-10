@@ -156,12 +156,7 @@ const AuthLayout = () => {
         </div>
 
         {/* Navigation Items */}
-        <div className="relative z-10 flex items-center justify-between" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-          <div className="flex gap-8" style={{ display: 'flex', gap: '32px' }}>
-            <a href="#features" className="text-xs font-semibold text-slate-400 hover:text-white transition-colors">Features</a>
-            <a href="#analytics" className="text-xs font-semibold text-slate-400 hover:text-white transition-colors">Analytics</a>
-            <a href="#security" className="text-xs font-semibold text-slate-400 hover:text-white transition-colors">Security</a>
-          </div>
+        <div className="relative z-10 flex items-center justify-end" style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center' }}>
           <div className="flex items-center gap-1.5 text-xs font-bold text-orange-400 uppercase tracking-wider" style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
             System Status
             <span className="w-2 h-2 rounded-full bg-emerald-500 shadow-[0_0_8px_#10b981]" />
